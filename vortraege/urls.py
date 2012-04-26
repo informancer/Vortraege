@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-urlpatterns = patterns('vortraegeapp.views',
+urlpatterns = patterns('vortraege.views',
     url(r'^$', 'index'),
     url(r'^(?P<vortrag_id>\d+)/$', 'details') ,
     url(r'^(?P<vortrag_id>\d+)/pressetext/$', 'pressetext') ,
