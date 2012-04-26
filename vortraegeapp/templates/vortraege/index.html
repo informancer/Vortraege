@@ -1,0 +1,9 @@
+{% if vortraege_list %}
+    <ul>
+      {% for vortrag in vortraege_list %}
+          <li><a href="/vortraege/{{ vortrag.id }}/">{{ vortrag.thema }}</a></li>
+      {% endfor %}
+    </ul>
+{% else %}
+    <p>Keine Vortraege</p>
+{% endif %}
