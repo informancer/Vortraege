@@ -16,4 +16,4 @@ Eintritt:       Frei. Um Spenden wird gebeten.
 
 Kurzbeschreibung:
 
-{{ vortrag.beschreibung }}
+{{ beschreibung }}

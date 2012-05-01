@@ -21,7 +21,7 @@ class AllTestCase(TestCase):
                                              referent='John Doe',
                                              orgapate='Paul Smith',
                                              beschreibung="""
-This is a very nice talk, presented by a guy who really knows what he's talking about. 
+This is a very nice talk, presented by a guy who really knows what he is talking about. 
 The previous line should be wrapped in the text.
 """)
         self.c = Client()
@@ -36,7 +36,7 @@ The previous line should be wrapped in the text.
     def test_pressetext_wrapping(self):
         response=self.c.get('/vortraege/%i/pressetext/'%self.vortrag.pk)
         for line in response.content.split('\n'):
-            self.assertTrue(len(line) <= 70, 'The content should be wrapped at 70 characters')
+            self.assertTrue(len(line) <= 80, 'The content should be wrapped at 80 characters')
         
     def test_aushang(self):
         """

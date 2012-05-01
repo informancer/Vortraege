@@ -22,8 +22,10 @@ def details(request, vortrag_id):
 
 def pressetext(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
+    beschreibung = '\n'.join(wrap(v.beschreibung, 80))
     response = render_to_response('vortraege/pressetext.txt', {'vortrag': v,
-                                                               'datum': v.datum.strftime('%A, %d. %B %Y')})
+                                                               'datum': v.datum.strftime('%A, %d. %B %Y'),
+                                                               'beschreibung': beschreibung})
     response['Content-Type'] = 'text/plain; charset=utf-8'
     response['Content-Disposition']  = 'attachment; filename=pressetext-%s.txt'%v.datum.strftime('%Y%m')
     return response
