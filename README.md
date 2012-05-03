@@ -2,5 +2,6 @@ Depends on:
 
     * [CairsoSVG](http://cairosvg.org/)
     * [qrcode](https://github.com/lincolnloop/python-qrcode)
+    * [icalendar](https://github.com/collective/icalendar)
 
-both are available in pypi.
+all are available in pypi.

@@ -8,6 +8,7 @@
  * Allow for uploaded files handling (PDF Documents)
  * Add events to flyers
  * Do not escape characters in the pressetext (html escape)
+ * Add RSS Feed
 
 ## Events
  

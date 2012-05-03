@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from vortraege.models import Vortrag
 from textwrap import wrap
@@ -5,6 +6,8 @@ from textwrap import wrap
 from django.template import Context, loader
 from django.http import HttpResponse
 
+from icalendar import Event
+import qrcode
 import cairosvg
 
 # Create your views here.
@@ -30,6 +33,16 @@ def pressetext(request, vortrag_id):
     response['Content-Disposition']  = 'attachment; filename=pressetext-%s.txt'%v.datum.strftime('%Y%m')
     return response
 
+def vevent(request, vortrag_id):
+    v = get_object_or_404(Vortrag, pk=vortrag_id)
+    event = Event()
+    event.add('description', v.thema)
+    ical = event.to_ical
+    response = HttpResponse(ical, mimetype='text/calendar')
+    response['Filename'] = 'filename.ics'  # IE needs this
+    response['Content-Disposition'] = 'attachment; filename=vortrag-%s.ics'%v.datum.strftime('%Y%m')
+    return response
+
 def pdf_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
@@ -47,6 +60,8 @@ def pdf_aushang(request, vortrag_id):
     
 def svg_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
+
+    print request.build_absolute_uri(reverse('details', kwargs={'vortrag_id': vortrag_id}))
 
     t = loader.get_template('vortraege/aushang.svg')
     c = Context({'vortrag': v,
