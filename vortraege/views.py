@@ -7,7 +7,10 @@ from django.template import Context, loader
 from django.http import HttpResponse
 
 from icalendar import Event
+import StringIO
+import base64
 import qrcode
+import qrcode.image.svg
 import cairosvg
 
 # Create your views here.
@@ -46,9 +49,15 @@ def vevent(request, vortrag_id):
 def pdf_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
+    temp_out = StringIO.StringIO()
+    img = qrcode.make('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
+    img.save(temp_out)
+    encoded = base64.b64encode(temp_out.getvalue())
+
     t = loader.get_template('vortraege/aushang.svg')
     c = Context({'vortrag': v,
-                 'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr')})
+                 'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
+                 'termin': encoded})
     rendered =  t.render(c)
 
     response = HttpResponse(mimetype='application/pdf')
@@ -61,11 +70,15 @@ def pdf_aushang(request, vortrag_id):
 def svg_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
-    print request.build_absolute_uri(reverse('details', kwargs={'vortrag_id': vortrag_id}))
+    temp_out = StringIO.StringIO()
+    img = qrcode.make('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
+    img.save(temp_out)
+    encoded = base64.b64encode(temp_out.getvalue())
 
     t = loader.get_template('vortraege/aushang.svg')
     c = Context({'vortrag': v,
-                 'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr')})
+                 'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
+                 'termin': encoded})
     rendered = t.render(c)
 
     response = HttpResponse(rendered)
@@ -86,7 +99,8 @@ def pdf_flyer(request, vortrag_id):
     c = Context({'vortrag': v,
                  'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
                  'header1': header1,
-                 'header2': header2})
+                 'header2': header2,
+                 'termin': encoded})
     rendered = t.render(c)
 
     response = HttpResponse(mimetype='application/pdf')
