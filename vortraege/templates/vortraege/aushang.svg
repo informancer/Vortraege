@@ -322,19 +322,6 @@
          id="tspan3726"
          x="53.527996"
          y="750.39398">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan></text>
-    <!--rect
-       style="fill:#cccccc;fill-opacity:1;stroke:none"
-       id="rect3749"
-       width="106.06602"
-       height="106.06602"
-       x="545.97101"
-       y="292.63095" /-->
-    <image
-       width="104.03295"
-       height="104.03295"
-       xlink:href="data:image/png;base64,{{ termin }}"
-       id="image3350"
-       x="546.98755"
-       y="293.64749" />
+    {{ termin }}
   </g>
 </svg>

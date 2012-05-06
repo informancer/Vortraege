@@ -4,13 +4,15 @@ from vortraege.models import Vortrag
 from textwrap import wrap
 
 from django.template import Context, loader
+from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 
 from icalendar import Event
-import StringIO
 import base64
+import StringIO
 import qrcode
 import qrcode.image.svg
+import xml.etree.ElementTree
 import cairosvg
 
 # Create your views here.
@@ -49,15 +51,25 @@ def vevent(request, vortrag_id):
 def pdf_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
+    # The qrcode module tightly encapsulate its data,
+    # blocking changes to the generated svg,
+    # which is why we go he StringIO way.
     temp_out = StringIO.StringIO()
-    img = qrcode.make('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
+    qr = qrcode.QRCode()
+    qr.add_data('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
+    img = qr.make_image(image_factory=qrcode.image.svg.SvgFragmentImage)
     img.save(temp_out)
-    encoded = base64.b64encode(temp_out.getvalue())
+    
+    # Now change the XML so we can use it in the template
+    e = xml.etree.ElementTree.fromstring(temp_out.getvalue())
+    e.tag = '{http://www.w3.org/2000/svg}g'
+    del e.attrib['version']
+    e.attrib['transform'] = 'translate(533.36055,279.81226)'
 
     t = loader.get_template('vortraege/aushang.svg')
     c = Context({'vortrag': v,
                  'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
-                 'termin': encoded})
+                 'termin': mark_safe(xml.etree.ElementTree.tostring(e))})
     rendered =  t.render(c)
 
     response = HttpResponse(mimetype='application/pdf')
@@ -70,20 +82,34 @@ def pdf_aushang(request, vortrag_id):
 def svg_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
+    #print request.build_absolute_uri(reverse('details', kwargs={'vortrag_id': vortrag_id}))
+
+    # The qrcode module tightly encapsulate its data.
     temp_out = StringIO.StringIO()
-    img = qrcode.make('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
+    qr = qrcode.QRCode()
+    qr.add_data('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
+    img = qr.make_image(image_factory=qrcode.image.svg.SvgFragmentImage)
+    
+    #img = qrcode.make('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
     img.save(temp_out)
-    encoded = base64.b64encode(temp_out.getvalue())
+    #encoded = base64.b64encode(temp_out.getvalue())
+    
+    # Now change the XML so we can use it in the template
+    e = xml.etree.ElementTree.fromstring(temp_out.getvalue())
+    e.tag = '{http://www.w3.org/2000/svg}g'
+    del e.attrib['version']
+    e.attrib['transform'] = 'translate(533.36055,279.81226)'
 
     t = loader.get_template('vortraege/aushang.svg')
     c = Context({'vortrag': v,
                  'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
-                 'termin': encoded})
+#                 'termin': mark_safe(temp_out.getvalue())})
+                 'termin': mark_safe(xml.etree.ElementTree.tostring(e))})
     rendered = t.render(c)
 
     response = HttpResponse(rendered)
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.datum.strftime('%Y%m')
+    #response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.datum.strftime('%Y%m')
     return response
 
 def pdf_flyer(request, vortrag_id):
