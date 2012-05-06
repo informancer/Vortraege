@@ -48,10 +48,9 @@ def vevent(request, vortrag_id):
     response['Content-Disposition'] = 'attachment; filename=vortrag-%s.ics'%v.datum.strftime('%Y%m')
     return response
 
-def pdf_aushang(request, vortrag_id):
-    v = get_object_or_404(Vortrag, pk=vortrag_id)
-
-    # The qrcode module tightly encapsulate its data,
+    
+def _render_svg_aushang(v):
+    # The qrcode module tightly encapsulate its data.
     # blocking changes to the generated svg,
     # which is why we go he StringIO way.
     temp_out = StringIO.StringIO()
@@ -66,11 +65,17 @@ def pdf_aushang(request, vortrag_id):
     del e.attrib['version']
     e.attrib['transform'] = 'translate(533.36055,279.81226)'
 
+    # And finally render the poster
     t = loader.get_template('vortraege/aushang.svg')
     c = Context({'vortrag': v,
                  'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
                  'termin': mark_safe(xml.etree.ElementTree.tostring(e))})
-    rendered =  t.render(c)
+    return t.render(c)    
+
+def pdf_aushang(request, vortrag_id):
+    v = get_object_or_404(Vortrag, pk=vortrag_id)
+
+    rendered = _render_svg_aushang(v)
 
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition']  = 'attachment; filename=aushang-%s.pdf'%v.datum.strftime('%Y%m')
@@ -78,34 +83,11 @@ def pdf_aushang(request, vortrag_id):
     cairosvg.svg2pdf(bytestring=rendered.encode('utf-8'), write_to=response)
 
     return response
-    
+
 def svg_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
-    #print request.build_absolute_uri(reverse('details', kwargs={'vortrag_id': vortrag_id}))
-
-    # The qrcode module tightly encapsulate its data.
-    temp_out = StringIO.StringIO()
-    qr = qrcode.QRCode()
-    qr.add_data('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
-    img = qr.make_image(image_factory=qrcode.image.svg.SvgFragmentImage)
-    
-    #img = qrcode.make('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
-    img.save(temp_out)
-    #encoded = base64.b64encode(temp_out.getvalue())
-    
-    # Now change the XML so we can use it in the template
-    e = xml.etree.ElementTree.fromstring(temp_out.getvalue())
-    e.tag = '{http://www.w3.org/2000/svg}g'
-    del e.attrib['version']
-    e.attrib['transform'] = 'translate(533.36055,279.81226)'
-
-    t = loader.get_template('vortraege/aushang.svg')
-    c = Context({'vortrag': v,
-                 'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
-#                 'termin': mark_safe(temp_out.getvalue())})
-                 'termin': mark_safe(xml.etree.ElementTree.tostring(e))})
-    rendered = t.render(c)
+    rendered = _render_svg_aushang(v)
 
     response = HttpResponse(rendered)
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
