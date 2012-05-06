@@ -8,15 +8,21 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.test.client import Client
 
+from lxml import etree
+from xml_compare import xml_compare
+
 from vortraege.models import Vortrag
 
 from datetime import datetime
-from django.utils.timezone import utc, now
+from  django.utils.timezone import make_aware, get_default_timezone
+
+import sys
 
 class AllTestCase(TestCase):
     def setUp(self):
         # save a dummy vortrag
-        self.vortrag = Vortrag.objects.create(datum=now(),
+        start_date = make_aware(datetime(2012, 05, 06, 16, 03, 00), get_default_timezone())
+        self.vortrag = Vortrag.objects.create(datum=start_date,
                                              thema='Cooles Vortrag',
                                              referent='John Doe',
                                              orgapate='Paul Smith',
@@ -53,6 +59,15 @@ The previous line should be wrapped in the text.
         response=self.c.get('/vortraege/%i/aushang/preview/'%self.vortrag.pk)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
+
+        with file('test/expected_aushang.svg') as expect_file:
+            expected = etree.fromstring(expect_file.read())
+            actual = etree.fromstring(response.content)        
+            self.assertTrue(xml_compare(expected, actual, reporter=sys.stderr.write))
+
+        # The following is used to create an expected file
+        #expected = open('test/expected_aushang.svg', 'w')
+        #expected.write(response.content)
 
     def test_flyer(self):
         """
