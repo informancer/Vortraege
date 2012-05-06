@@ -109,7 +109,7 @@ def svg_aushang(request, vortrag_id):
 
     response = HttpResponse(rendered)
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    #response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.datum.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.datum.strftime('%Y%m')
     return response
 
 def pdf_flyer(request, vortrag_id):
@@ -125,8 +125,7 @@ def pdf_flyer(request, vortrag_id):
     c = Context({'vortrag': v,
                  'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
                  'header1': header1,
-                 'header2': header2,
-                 'termin': encoded})
+                 'header2': header2})
     rendered = t.render(c)
 
     response = HttpResponse(mimetype='application/pdf')
