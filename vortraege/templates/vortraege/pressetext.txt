@@ -1,8 +1,8 @@
-Datum:          {{ datum }}
+Datum:          {{ start }}
 Zeit:           19:00 Einlass, 19:30 Vortragsbeginn
 
-Thema:          "{{ vortrag.title }}"
-Referent:        {{ vortrag.referent }}
+Thema:          "{{ talk.title }}"
+Referent:        {{ talk.referent }}
 
 Ort:            Stadtbibliothek am Mailänder Platz 
                 Mailänder Platz 1, 70173 Stuttgart
@@ -16,4 +16,4 @@ Eintritt:       Frei. Um Spenden wird gebeten.
 
 Kurzbeschreibung:
 
-{{ beschreibung }}
+{{ description }}

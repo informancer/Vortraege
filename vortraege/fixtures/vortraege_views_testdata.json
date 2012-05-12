@@ -1,18 +1,18 @@
 [
     {
         "pk": 1, 
-        "model": "vortraege.vortrag", 
+        "model": "vortraege.talk", 
         "fields": {
             "audio": "", 
-            "folien": "", 
+            "slides": "", 
             "start": "2012-05-06T14:03:00Z", 
-            "pressetext": "", 
+            "presstext": "", 
             "description": "This is a very nice talk, presented by a guy who really knows what he is talking about. \r\nThe previous line should be wrapped in the text.\r\n", 
-            "referent": "John Doe", 
+            "speaker": "John Doe", 
             "flyer": "", 
             "title": "Cooles Vortrag", 
-            "aushang": "", 
-            "orgapate": "Paul Smith"
+            "poster": "", 
+            "organiser": "Paul Smith"
         }
     }
 ]

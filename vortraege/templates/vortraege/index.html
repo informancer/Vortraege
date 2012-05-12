@@ -1,7 +1,7 @@
-{% if vortraege_list %}
+{% if talks_list %}
     <ul>
-      {% for vortrag in vortraege_list %}
-          <li><a href="{% url vortraege_details vortrag_id=vortrag.id %}">{{ vortrag.title }}</a></li>
+      {% for talk in talks_list %}
+          <li><a href="{% url vortraege_details talk_id=talk.id %}">{{ talk.title }}</a></li>
       {% endfor %}
     </ul>
 {% else %}

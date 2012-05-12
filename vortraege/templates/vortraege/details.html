@@ -1,17 +1,17 @@
-<h1>{{ vortrag.title }}</h1>
+<h1>{{ talk.title }}</h1>
 
-<p>Referent: {{ vortrag.referent }} </p>
+<p>Referent: {{ talk.speaker }} </p>
 
-<p>{{ vortrag.start }}</p>
+<p>{{ talk.start }}</p>
 
-<p>{{ vortrag.beschreibung }}</p>
+<p>{{ talk.description }}</p>
 
-<p>Orgapate: {{ vortrag.orgapate }}</p>
+<p>Orgapate: {{ talk.organiser }}</p>
 
-<p><a href="{% url vortraege_pressetext vortrag_id=vortrag.id %}">Pressetext {{vortrag.start}}</a></p>
-<p><a href="{% url vortraege_pdf_aushang vortrag_id=vortrag.id %}">Aushang {{vortrag.start}}</a></p>
-<p><a href="{% url vortraege_pdf_flyer vortrag_id=vortrag.id %}">Flyer {{vortrag.start}}</a></p>
-<p><a href="{% url vortraege_ical vortrag_id=vortrag.id %}">Kalendereintrag {{vortrag.start}}</a></p>
+<p><a href="{% url vortraege_pressetext talk_id=talk.id %}">Pressetext {{talk.start}}</a></p>
+<p><a href="{% url vortraege_pdf_aushang talk_id=talk.id %}">Aushang {{talk.start}}</a></p>
+<p><a href="{% url vortraege_pdf_flyer talk_id=talk.id %}">Flyer {{talk.start}}</a></p>
+<p><a href="{% url vortraege_ical talk_id=talk.id %}">Kalendereintrag {{talk.start}}</a></p>
 
-<p> Folien: {{ vortrag.folien }} </p>
-<p> Audio: {{vortrag.audio}} </p>
+<p> Folien: {{ talk.slides }} </p>
+<p> Audio: {{talk.audio}} </p>
