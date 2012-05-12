@@ -17,7 +17,7 @@ import cairosvg
 
 # Create your views here.
 def index(request): 
-    vortraege_list = Vortrag.objects.all().order_by('datum')
+    vortraege_list = Vortrag.objects.all().order_by('start')
     return render_to_response('vortraege/index.html', 
                               {
             'vortraege_list': vortraege_list,
@@ -30,22 +30,22 @@ def details(request, vortrag_id):
 
 def pressetext(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
-    beschreibung = '\n'.join(wrap(v.beschreibung, 80))
+    description = '\n'.join(wrap(v.description, 80))
     response = render_to_response('vortraege/pressetext.txt', {'vortrag': v,
-                                                               'datum': v.datum.strftime('%A, %d. %B %Y'),
-                                                               'beschreibung': beschreibung})
+                                                               'datum': v.start.strftime('%A, %d. %B %Y'),
+                                                               'beschreibung': description})
     response['Content-Type'] = 'text/plain; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=pressetext-%s.txt'%v.datum.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=pressetext-%s.txt'%v.start.strftime('%Y%m')
     return response
 
 def vevent(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
     event = Event()
-    event.add('description', v.thema)
+    event.add('description', v.title)
     ical = event.to_ical
     response = HttpResponse(ical, mimetype='text/calendar')
     response['Filename'] = 'filename.ics'  # IE needs this
-    response['Content-Disposition'] = 'attachment; filename=vortrag-%s.ics'%v.datum.strftime('%Y%m')
+    response['Content-Disposition'] = 'attachment; filename=vortrag-%s.ics'%v.start.strftime('%Y%m')
     return response
 
     
@@ -68,7 +68,7 @@ def render_svg_aushang(v):
     # And finally render the poster
     t = loader.get_template('vortraege/aushang.svg')
     c = Context({'vortrag': v,
-                 'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
+                 'datum': v.start.strftime('%d.%m.%Y, %H:%M Uhr'),
                  'termin': mark_safe(xml.etree.ElementTree.tostring(e))})
     return t.render(c)    
 
@@ -79,7 +79,7 @@ def svg_aushang(request, vortrag_id):
 
     response = HttpResponse(rendered)
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.datum.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.start.strftime('%Y%m')
     return response
 
 def pdf_aushang(request, vortrag_id):
@@ -88,7 +88,7 @@ def pdf_aushang(request, vortrag_id):
     rendered = render_svg_aushang(v)
 
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition']  = 'attachment; filename=aushang-%s.pdf'%v.datum.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=aushang-%s.pdf'%v.start.strftime('%Y%m')
     
     cairosvg.svg2pdf(bytestring=rendered.encode('utf-8'), write_to=response)
 
@@ -96,7 +96,7 @@ def pdf_aushang(request, vortrag_id):
 
 def pdf_flyer(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
-    header = wrap('%s: %s'%(v.referent, v.thema), 25)
+    header = wrap('%s: %s'%(v.referent, v.title), 25)
     header1 = header[0]
     if len(header) > 1:
         header2 = header[1]
@@ -105,13 +105,13 @@ def pdf_flyer(request, vortrag_id):
 
     t = loader.get_template('vortraege/flyer.svg')
     c = Context({'vortrag': v,
-                 'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
+                 'datum': v.start.strftime('%d.%m.%Y, %H:%M Uhr'),
                  'header1': header1,
                  'header2': header2})
     rendered = t.render(c)
 
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition']  = 'attachment; filename=flyer-%s.pdf'%v.datum.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=flyer-%s.pdf'%v.start.strftime('%Y%m')
     
     cairosvg.svg2pdf(bytestring=rendered.encode('utf-8'), write_to=response)
 
@@ -119,18 +119,18 @@ def pdf_flyer(request, vortrag_id):
 
 def svg_flyer(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
-    header = wrap('%s: %s'%(v.referent, v.thema), 25)
+    header = wrap('%s: %s'%(v.referent, v.title), 25)
     header1 = header[0]
     if len(header) > 1:
         header2 = header[1]
     else:
         header2 = u''
     response = render_to_response('vortraege/flyer.svg', {'vortrag': v,
-                                                          'datum': v.datum.strftime('%d.%m.%Y, %H:%M Uhr'),
+                                                          'datum': v.start.strftime('%d.%m.%Y, %H:%M Uhr'),
                                                           'header1': header1,
                                                           'header2': header2})
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=flyer-%s.svg'%v.datum.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=flyer-%s.svg'%v.start.strftime('%Y%m')
     return response
 
 

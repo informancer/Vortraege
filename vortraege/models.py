@@ -10,11 +10,11 @@ def flyer_upload_to(instance, filename):
 
 # Create your models here.
 class Vortrag(models.Model):
-    datum = models.DateTimeField() 
-    thema = models.CharField(max_length=200)
+    start = models.DateTimeField() 
+    title = models.CharField(max_length=200)
     referent = models.CharField(max_length=200)
     orgapate = models.CharField(max_length=200, blank=True)
-    beschreibung = models.TextField(blank=True)
+    description = models.TextField(blank=True)
     pressetext = models.FileField(upload_to=pressetext_upload_to, blank=True)
     aushang = models.FileField(upload_to=aushang_upload_to, blank=True)
     flyer = models.FileField(upload_to=flyer_upload_to, blank=True)

@@ -1,7 +1,7 @@
 Datum:          {{ datum }}
 Zeit:           19:00 Einlass, 19:30 Vortragsbeginn
 
-Thema:          "{{ vortrag.thema }}"
+Thema:          "{{ vortrag.title }}"
 Referent:        {{ vortrag.referent }}
 
 Ort:            Stadtbibliothek am Mailänder Platz 
