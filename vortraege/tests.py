@@ -54,25 +54,25 @@ class AllTestCase(TestCase):
         for line in response.content.split('\n'):
             self.assertTrue(len(line) <= 80, 'The content should be wrapped at 80 characters')
         
-    def test_aushang(self):
+    def test_poster(self):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get(reverse('vortraege_pdf_aushang', kwargs={'talk_id': 1}))
+        response=self.client.get(reverse('vortraege_pdf_poster', kwargs={'talk_id': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
 
-    def test_aushang_preview(self):
+    def test_poster_preview(self):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get(reverse('vortraege_svg_aushang', kwargs={'talk_id': 1}))
+        response=self.client.get(reverse('vortraege_svg_poster', kwargs={'talk_id': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
 
-        with file('test/vortraege_views_testdata_aushang_1.svg') as expect_file:
+        with file('test/vortraege_views_testdata_poster_1.svg') as expect_file:
             expected = etree.fromstring(expect_file.read())
             actual = etree.fromstring(response.content)        
             self.assertTrue(xml_compare(expected, actual, reporter=sys.stderr.write))
@@ -95,3 +95,7 @@ class AllTestCase(TestCase):
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
 
+        with file('test/vortraege_views_testdata_flyer_1.svg') as expect_file:
+            expected = etree.fromstring(expect_file.read())
+            actual = etree.fromstring(response.content)        
+            self.assertTrue(xml_compare(expected, actual, reporter=sys.stderr.write))

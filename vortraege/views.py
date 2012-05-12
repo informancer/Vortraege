@@ -49,7 +49,7 @@ def vevent(request, talk_id):
     return response
 
     
-def render_svg_aushang(talk):
+def render_svg_poster(talk):
     # The qrcode module tightly encapsulate its data.
     # blocking changes to the generated svg,
     # which is why we go he StringIO way.
@@ -73,20 +73,20 @@ def render_svg_aushang(talk):
                  'qrcode': mark_safe(xml.etree.ElementTree.tostring(e))})
     return template.render(c)    
 
-def svg_aushang(request, talk_id):
+def svg_poster(request, talk_id):
     t = get_object_or_404(Talk, pk=talk_id)
 
-    rendered = render_svg_aushang(t)
+    rendered = render_svg_poster(t)
 
     response = HttpResponse(rendered)
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
     response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%t.start.strftime('%Y%m')
     return response
 
-def pdf_aushang(request, talk_id):
+def pdf_poster(request, talk_id):
     t = get_object_or_404(Talk, pk=talk_id)
 
-    rendered = render_svg_aushang(t)
+    rendered = render_svg_poster(t)
 
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition']  = 'attachment; filename=aushang-%s.pdf'%t.start.strftime('%Y%m')
@@ -95,40 +95,38 @@ def pdf_aushang(request, talk_id):
 
     return response
 
-def svg_flyer(request, talk_id):
-    v = get_object_or_404(Talk, pk=talk_id)
-    header = wrap('%s: %s'%(v.speaker, v.title), 25)
+def render_svg_flyer(talk):
+    header = wrap('%s: %s'%(talk.speaker, talk.title), 25)
     header1 = header[0]
     if len(header) > 1:
         header2 = header[1]
     else:
         header2 = u''
-    response = render_to_response('vortraege/flyer.svg', {'talk': v,
-                                                          'start': v.start.strftime('%d.%m.%Y, %H:%M Uhr'),
-                                                          'header1': header1,
-                                                          'header2': header2})
+    template = loader.get_template('vortraege/flyer.svg')
+    c = Context({'talk': talk,
+                 'start': talk.start.strftime('%d.%m.%Y, %H:%M Uhr'),
+                 'header1': header1,
+                 'header2': header2})
+    return template.render(c)    
+    
+
+def svg_flyer(request, talk_id):
+    talk = get_object_or_404(Talk, pk=talk_id)
+
+    rendered = render_svg_flyer(talk)
+
+    response = HttpResponse(rendered)
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=flyer-%s.svg'%v.start.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=flyer-%s.svg'%talk.start.strftime('%Y%m')
     return response
 
 def pdf_flyer(request, talk_id):
-    v = get_object_or_404(Talk, pk=talk_id)
-    header = wrap('%s: %s'%(v.speaker, v.title), 25)
-    header1 = header[0]
-    if len(header) > 1:
-        header2 = header[1]
-    else:
-        header2 = u''
+    talk = get_object_or_404(Talk, pk=talk_id)
 
-    t = loader.get_template('vortraege/flyer.svg')
-    c = Context({'talk': v,
-                 'start': v.start.strftime('%d.%m.%Y, %H:%M Uhr'),
-                 'header1': header1,
-                 'header2': header2})
-    rendered = t.render(c)
+    rendered = render_svg_flyer(talk)
 
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition']  = 'attachment; filename=flyer-%s.pdf'%v.start.strftime('%Y%m')
+    response['Content-Disposition']  = 'attachment; filename=flyer-%s.pdf'%talk.start.strftime('%Y%m')
     
     cairosvg.svg2pdf(bytestring=rendered.encode('utf-8'), write_to=response)
 
