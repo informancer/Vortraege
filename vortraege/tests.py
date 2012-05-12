@@ -67,14 +67,10 @@ class AllTestCase(TestCase):
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
 
-        with file('test/expected_aushang.svg') as expect_file:
+        with file('test/vortraege_views_testdata_aushang_1.svg') as expect_file:
             expected = etree.fromstring(expect_file.read())
             actual = etree.fromstring(response.content)        
             self.assertTrue(xml_compare(expected, actual, reporter=sys.stderr.write))
-
-        # The following is used to create an expected file
-        #expected = open('test/expected_aushang.svg', 'w')
-        #expected.write(response.content)
 
     def test_flyer(self):
         """

@@ -49,7 +49,7 @@ def vevent(request, vortrag_id):
     return response
 
     
-def _render_svg_aushang(v):
+def render_svg_aushang(v):
     # The qrcode module tightly encapsulate its data.
     # blocking changes to the generated svg,
     # which is why we go he StringIO way.
@@ -75,7 +75,7 @@ def _render_svg_aushang(v):
 def svg_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
-    rendered = _render_svg_aushang(v)
+    rendered = render_svg_aushang(v)
 
     response = HttpResponse(rendered)
     response['Content-Type'] = 'image/svg+xml; charset=utf-8'
@@ -85,7 +85,7 @@ def svg_aushang(request, vortrag_id):
 def pdf_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
-    rendered = _render_svg_aushang(v)
+    rendered = render_svg_aushang(v)
 
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition']  = 'attachment; filename=aushang-%s.pdf'%v.datum.strftime('%Y%m')
