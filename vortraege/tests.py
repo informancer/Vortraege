@@ -19,18 +19,7 @@ from  django.utils.timezone import make_aware, get_default_timezone
 import sys
 
 class AllTestCase(TestCase):
-    def setUp(self):
-        # save a dummy vortrag
-        start_date = make_aware(datetime(2012, 05, 06, 16, 03, 00), get_default_timezone())
-        self.vortrag = Vortrag.objects.create(datum=start_date,
-                                             thema='Cooles Vortrag',
-                                             referent='John Doe',
-                                             orgapate='Paul Smith',
-                                             beschreibung="""
-This is a very nice talk, presented by a guy who really knows what he is talking about. 
-The previous line should be wrapped in the text.
-""")
-        self.c = Client()
+    fixtures =  ['vortraege_views_testdata.json']
 
     def test_index(self):
         response = self.client.get('/vortraege/')
@@ -42,12 +31,12 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/%i/pressetext/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/1/pressetext/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
 
     def test_pressetext_wrapping(self):
-        response=self.client.get('/vortraege/%i/pressetext/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/1/pressetext/')
         for line in response.content.split('\n'):
             self.assertTrue(len(line) <= 80, 'The content should be wrapped at 80 characters')
         
@@ -55,7 +44,7 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/%i/aushang/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/1/aushang/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
@@ -64,7 +53,7 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/%i/aushang/preview/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/1/aushang/preview/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
@@ -82,7 +71,7 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/%i/flyer/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/1/flyer/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
@@ -91,7 +80,7 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/%i/flyer/preview/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/1/flyer/preview/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
