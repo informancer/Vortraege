@@ -26,6 +26,18 @@ class AllTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue('vortraege_list' in response.context)
         self.assertEqual([vortrag.pk for vortrag in response.context['vortraege_list']], [1])
+
+    def test_details(self):
+        response = self.client.get('/vortraege/1/')
+        self.assertEqual(response.status_code, 200)
+
+        # Ensure an inexistant vortrag throws a 404
+        response = self.client.get('/vortraege/2/')
+        self.assertEqual(response.status_code, 404)
+
+
+    def test_vevent(self):
+        pass
         
     def test_pressetext_attachment(self):
         """
@@ -34,9 +46,6 @@ class AllTestCase(TestCase):
         response=self.client.get('/vortraege/1/pressetext/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
-
-    def test_pressetext_wrapping(self):
-        response=self.client.get('/vortraege/1/pressetext/')
         for line in response.content.split('\n'):
             self.assertTrue(len(line) <= 80, 'The content should be wrapped at 80 characters')
         
