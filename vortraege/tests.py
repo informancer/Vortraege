@@ -31,16 +31,23 @@ This is a very nice talk, presented by a guy who really knows what he is talking
 The previous line should be wrapped in the text.
 """)
         self.c = Client()
-                                             
+
+    def test_index(self):
+        response = self.client.get('/vortraege/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('vortraege_list' in response.context)
+        self.assertEqual([vortrag.pk for vortrag in response.context['vortraege_list']], [1])
+        
     def test_pressetext_attachment(self):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.c.get('/vortraege/%i/pressetext/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/%i/pressetext/'%self.vortrag.pk)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
 
     def test_pressetext_wrapping(self):
-        response=self.c.get('/vortraege/%i/pressetext/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/%i/pressetext/'%self.vortrag.pk)
         for line in response.content.split('\n'):
             self.assertTrue(len(line) <= 80, 'The content should be wrapped at 80 characters')
         
@@ -48,7 +55,8 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.c.get('/vortraege/%i/aushang/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/%i/aushang/'%self.vortrag.pk)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
 
@@ -56,7 +64,8 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.c.get('/vortraege/%i/aushang/preview/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/%i/aushang/preview/'%self.vortrag.pk)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
 
@@ -73,7 +82,8 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.c.get('/vortraege/%i/flyer/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/%i/flyer/'%self.vortrag.pk)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
 
@@ -81,7 +91,8 @@ The previous line should be wrapped in the text.
         """
         Tests that the pressetext is an attachment
         """
-        response=self.c.get('/vortraege/%i/flyer/preview/'%self.vortrag.pk)
+        response=self.client.get('/vortraege/%i/flyer/preview/'%self.vortrag.pk)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
 
