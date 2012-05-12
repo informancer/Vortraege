@@ -17,33 +17,38 @@ from datetime import datetime
 from  django.utils.timezone import make_aware, get_default_timezone
 
 import sys
+from django.core.urlresolvers import reverse
 
 class AllTestCase(TestCase):
     fixtures =  ['vortraege_views_testdata.json']
 
     def test_index(self):
-        response = self.client.get('/vortraege/')
+        response = self.client.get(reverse('vortraege_index'))
         self.assertEqual(response.status_code, 200)
         self.assertTrue('vortraege_list' in response.context)
         self.assertEqual([vortrag.pk for vortrag in response.context['vortraege_list']], [1])
 
     def test_details(self):
-        response = self.client.get('/vortraege/1/')
+        response = self.client.get(reverse('vortraege_details', kwargs={'vortrag_id': 1}))
         self.assertEqual(response.status_code, 200)
 
         # Ensure an inexistant vortrag throws a 404
-        response = self.client.get('/vortraege/2/')
+        response = self.client.get(reverse('vortraege_details', kwargs={'vortrag_id': 2}))
         self.assertEqual(response.status_code, 404)
 
-
     def test_vevent(self):
-        pass
+        response = self.client.get(reverse('vortraege_ical', kwargs={'vortrag_id': 1}))
+        self.assertEqual(response.status_code, 200)
+
+        # Ensure an inexistant vortrag throws a 404
+        response = self.client.get(reverse('vortraege_ical', kwargs={'vortrag_id': 2}))
+        self.assertEqual(response.status_code, 404)
         
     def test_pressetext_attachment(self):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/1/pressetext/')
+        response=self.client.get(reverse('vortraege_pressetext', kwargs={'vortrag_id': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         for line in response.content.split('\n'):
@@ -53,7 +58,7 @@ class AllTestCase(TestCase):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/1/aushang/')
+        response=self.client.get(reverse('vortraege_pdf_aushang', kwargs={'vortrag_id': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
@@ -62,7 +67,7 @@ class AllTestCase(TestCase):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/1/aushang/preview/')
+        response=self.client.get(reverse('vortraege_svg_aushang', kwargs={'vortrag_id': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
@@ -76,7 +81,7 @@ class AllTestCase(TestCase):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/1/flyer/')
+        response=self.client.get(reverse('vortraege_pdf_flyer', kwargs={'vortrag_id': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
@@ -85,7 +90,7 @@ class AllTestCase(TestCase):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get('/vortraege/1/flyer/preview/')
+        response=self.client.get(reverse('vortraege_svg_flyer', kwargs={'vortrag_id': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))

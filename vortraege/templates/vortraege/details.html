@@ -6,12 +6,12 @@
 
 <p>{{ vortrag.beschreibung }}</p>
 
-<p>Orgapate: {{ ortrag.orgapate }}</p>
+<p>Orgapate: {{ vortrag.orgapate }}</p>
 
-<p><a href="/vortraege/{{ vortrag.id }}/pressetext/">Pressetext {{vortrag.datum}}</a></p>
-<p><a href="/vortraege/{{ vortrag.id }}/aushang/">Aushang {{vortrag.datum}}</a></p>
-<p><a href="/vortraege/{{ vortrag.id }}/flyer/">Flyer {{vortrag.datum}}</a></p>
-<p><a href="/vortraege/{{ vortrag.id }}/ical/">Kalendereintrag {{vortrag.datum}}</a></p>
+<p><a href="{% url vortraege_pressetext vortrag_id=vortrag.id %}">Pressetext {{vortrag.datum}}</a></p>
+<p><a href="{% url vortraege_pdf_aushang vortrag_id=vortrag.id %}">Aushang {{vortrag.datum}}</a></p>
+<p><a href="{% url vortraege_pdf_flyer vortrag_id=vortrag.id %}">Flyer {{vortrag.datum}}</a></p>
+<p><a href="{% url vortraege_ical vortrag_id=vortrag.id %}">Kalendereintrag {{vortrag.datum}}</a></p>
 
 <p> Folien: {{ vortrag.folien }} </p>
 <p> Audio: {{vortrag.audio}} </p>
