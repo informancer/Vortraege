@@ -72,6 +72,16 @@ def _render_svg_aushang(v):
                  'termin': mark_safe(xml.etree.ElementTree.tostring(e))})
     return t.render(c)    
 
+def svg_aushang(request, vortrag_id):
+    v = get_object_or_404(Vortrag, pk=vortrag_id)
+
+    rendered = _render_svg_aushang(v)
+
+    response = HttpResponse(rendered)
+    response['Content-Type'] = 'image/svg+xml; charset=utf-8'
+    response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.datum.strftime('%Y%m')
+    return response
+
 def pdf_aushang(request, vortrag_id):
     v = get_object_or_404(Vortrag, pk=vortrag_id)
 
@@ -82,16 +92,6 @@ def pdf_aushang(request, vortrag_id):
     
     cairosvg.svg2pdf(bytestring=rendered.encode('utf-8'), write_to=response)
 
-    return response
-
-def svg_aushang(request, vortrag_id):
-    v = get_object_or_404(Vortrag, pk=vortrag_id)
-
-    rendered = _render_svg_aushang(v)
-
-    response = HttpResponse(rendered)
-    response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%v.datum.strftime('%Y%m')
     return response
 
 def pdf_flyer(request, vortrag_id):
