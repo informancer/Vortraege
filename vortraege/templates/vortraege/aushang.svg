@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
+{% load vortraege_extra%}
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -322,6 +324,6 @@
          id="tspan3726"
          x="53.527996"
          y="750.39398">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan></text>
-    {{ qrcode }}
+    {{ "http://www.youtube.com/watch?v=Y1g2Cx03L2I"|qrcode }}
   </g>
 </svg>

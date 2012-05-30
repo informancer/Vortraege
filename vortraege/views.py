@@ -4,15 +4,9 @@ from vortraege.models import Talk
 from textwrap import wrap
 
 from django.template import Context, loader
-from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 
 from icalendar import Event
-import base64
-import StringIO
-import qrcode
-import qrcode.image.svg
-import xml.etree.ElementTree
 import cairosvg
 
 # Create your views here.
@@ -50,27 +44,11 @@ def vevent(request, talk_id):
 
     
 def render_svg_poster(talk):
-    # The qrcode module tightly encapsulate its data.
-    # blocking changes to the generated svg,
-    # which is why we go he StringIO way.
-    temp_out = StringIO.StringIO()
-    qr = qrcode.QRCode()
-    qr.add_data('http://www.youtube.com/watch?v=Y1g2Cx03L2I')
-    img = qr.make_image(image_factory=qrcode.image.svg.SvgFragmentImage)
-    img.save(temp_out)
-    
-    # Now change the XML so we can use it in the template
-    e = xml.etree.ElementTree.fromstring(temp_out.getvalue())
-    e.tag = '{http://www.w3.org/2000/svg}g'
-    del e.attrib['version']
-    # That should be inside the template.
-    e.attrib['transform'] = 'translate(533.36055,279.81226)'
 
     # And finally render the poster
     template = loader.get_template('vortraege/aushang.svg')
     c = Context({'talk': talk,
-                 'start': talk.start.strftime('%d.%m.%Y, %H:%M Uhr'),
-                 'qrcode': mark_safe(xml.etree.ElementTree.tostring(e))})
+                 'start': talk.start.strftime('%d.%m.%Y, %H:%M Uhr')})
     return template.render(c)    
 
 def svg_poster(request, talk_id):
