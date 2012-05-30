@@ -9,6 +9,7 @@
  * Add events to flyers
  * Do not escape characters in the pressetext (html escape)
  * Add RSS Feed
+ * Search a way to cleanly have a word-wrapped header in flyers.
 
 ## Events
  
