@@ -12,8 +12,8 @@ register = template.Library()
 
 @register.filter(name='qrcode')
 @stringfilter
-def render_qrcode(value):
-    """Converts a string in a SVG QRCode"""
+def render_qrcode(value, arg='0,0'):
+    """Converts a string in a SVG QRCode, the argument being the place for the code."""
     # The qrcode module tightly encapsulate its data.
     # blocking changes to the generated svg,
     # which is why we go he StringIO way.
@@ -28,6 +28,5 @@ def render_qrcode(value):
     e = xml.etree.ElementTree.fromstring(temp_out.getvalue())
     e.tag = '{http://www.w3.org/2000/svg}g'
     del e.attrib['version']
-    # That should be inside the template.
-    e.attrib['transform'] = 'translate(533.36055,279.81226)'
+    e.attrib['transform'] = 'translate(%s)'%arg
     return mark_safe(xml.etree.ElementTree.tostring(e))
