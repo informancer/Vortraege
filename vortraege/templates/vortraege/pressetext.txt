@@ -1,4 +1,4 @@
-Datum:          {{ start }}
+Datum:          {{ talk.start|date:"l, d. F Y" }}
 Zeit:           19:00 Einlass, 19:30 Vortragsbeginn
 
 Thema:          "{{ talk.title }}"
@@ -16,4 +16,4 @@ Eintritt:       Frei. Um Spenden wird gebeten.
 
 Kurzbeschreibung:
 
-{{ description }}
+{{ talk.description|wordwrap:70 }}

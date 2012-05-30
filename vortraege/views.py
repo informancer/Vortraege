@@ -24,10 +24,7 @@ def details(request, talk_id):
 
 def pressetext(request, talk_id):
     t = get_object_or_404(Talk, pk=talk_id)
-    description = '\n'.join(wrap(t.description, 80))
-    response = render_to_response('vortraege/pressetext.txt', {'talk': t,
-                                                               'start': t.start.strftime('%A, %d. %B %Y'),
-                                                               'description': description})
+    response = render_to_response('vortraege/pressetext.txt', {'talk': t})
     response['Content-Type'] = 'text/plain; charset=utf-8'
     response['Content-Disposition']  = 'attachment; filename=pressetext-%s.txt'%t.start.strftime('%Y%m')
     return response
@@ -45,7 +42,6 @@ def vevent(request, talk_id):
     
 def render_svg_poster(talk):
 
-    # And finally render the poster
     template = loader.get_template('vortraege/aushang.svg')
     c = Context({'talk': talk})
     return template.render(c)    
