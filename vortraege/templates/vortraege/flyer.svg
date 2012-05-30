@@ -511,7 +511,7 @@
          id="tspan3036"
          x="24.857151"
          y="161.6479"
-         style="font-size:20px;line-height:114.99999762%">{{talk.start|format_date:"%d.%m.%Y, %H:%M Uhr"}}</tspan><tspan
+         style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
          sodipodi:role="line"
          x="24.857151"
          y="184.6479"
@@ -555,7 +555,7 @@
          id="tspan3036-2-6"
          x="399.23022"
          y="688.49292"
-         style="font-size:20px;line-height:114.99999762%">{{talk.start|format_date:"%d.%m.%Y, %H:%M Uhr"}}</tspan><tspan
+         style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
          sodipodi:role="line"
          x="399.23022"
          y="711.49292"
@@ -906,7 +906,7 @@
        id="tspan3036-2"
        x="399.23022"
        y="161.64792"
-       style="font-size:20px;line-height:114.99999762%">{{talk.start|format_date:"%d.%m.%Y, %H:%M Uhr"}}</tspan><tspan
+       style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
        sodipodi:role="line"
        x="399.23022"
        y="184.64792"
@@ -972,7 +972,7 @@
        id="tspan3036-2-6-0"
        x="25.678774"
        y="688.49292"
-       style="font-size:20px;line-height:114.99999762%">{{talk.start|format_date:"%d.%m.%Y, %H:%M Uhr"}}</tspan><tspan
+       style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
        sodipodi:role="line"
        x="25.678774"
        y="711.49292"

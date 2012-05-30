@@ -172,7 +172,7 @@
          id="tspan3396"
          x="51.607994"
          y="195.73251"
-         style="font-size:32px;line-height:114.99999762%">{{talk.start|format_date:"%d.%m.%Y, %H:%M Uhr"}}</tspan><tspan
+         style="font-size:32px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
          sodipodi:role="line"
          x="51.607994"
          y="232.53252"
