@@ -30,3 +30,8 @@ def render_qrcode(value, arg='0,0'):
     del e.attrib['version']
     e.attrib['transform'] = 'translate(%s)'%arg
     return mark_safe(xml.etree.ElementTree.tostring(e))
+
+@register.filter
+def format_date(value, arg):
+    """Format a date according to the template given as an argument"""
+    return value.strftime(arg)

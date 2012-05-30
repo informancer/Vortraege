@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-{% load vortraege_extra%}
+<!-- {% load vortraege_extra%} -->
 
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -172,7 +172,7 @@
          id="tspan3396"
          x="51.607994"
          y="195.73251"
-         style="font-size:32px;line-height:114.99999762%">{{start}}</tspan><tspan
+         style="font-size:32px;line-height:114.99999762%">{{talk.start|format_date:"%d.%m.%Y, %H:%M Uhr"}}</tspan><tspan
          sodipodi:role="line"
          x="51.607994"
          y="232.53252"

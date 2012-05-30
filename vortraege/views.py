@@ -47,8 +47,7 @@ def render_svg_poster(talk):
 
     # And finally render the poster
     template = loader.get_template('vortraege/aushang.svg')
-    c = Context({'talk': talk,
-                 'start': talk.start.strftime('%d.%m.%Y, %H:%M Uhr')})
+    c = Context({'talk': talk})
     return template.render(c)    
 
 def svg_poster(request, talk_id):
@@ -82,7 +81,6 @@ def render_svg_flyer(talk):
         header2 = u''
     template = loader.get_template('vortraege/flyer.svg')
     c = Context({'talk': talk,
-                 'start': talk.start.strftime('%d.%m.%Y, %H:%M Uhr'),
                  'header1': header1,
                  'header2': header2})
     return template.render(c)    
