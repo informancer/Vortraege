@@ -8,7 +8,22 @@ import StringIO
 import xml.etree.ElementTree
 from django.utils.safestring import mark_safe
 
+from django.utils import timezone
+from icalendar import Event
+
 register = template.Library()
+
+@register.filter(name='vevent')
+def as_vevent(value):
+    """Conver an event in to a vevent string"""
+    event = Event()
+    event.add('dtstamp', value.start)
+    event.add('dtstart', value.start)
+    event.add('duration', timezone.timedelta(hours=2, minutes=30))
+    event.add('summary', value.title)
+    event.add('description', value.presstext)
+    
+    return event.to_ical()
 
 @register.filter(name='qrcode')
 @stringfilter
