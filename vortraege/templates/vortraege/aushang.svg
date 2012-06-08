@@ -324,6 +324,8 @@
          id="tspan3726"
          x="53.527996"
          y="750.39398">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan></text>
-    {{ talk|vevent|qrcode:"533.36055,279.81226" }}
+    <g transform="translate(533.36055,279.81226)">
+      {{ talk|vevent|qrcode }}
+    </g>
   </g>
 </svg>
