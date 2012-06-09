@@ -19,6 +19,10 @@ from  django.utils.timezone import make_aware, get_default_timezone
 import sys
 from django.core.urlresolvers import reverse
 
+from filecmp import cmp
+from tempfile import mkstemp
+from os import remove, fdopen
+
 class AllTestCase(TestCase):
     fixtures =  ['vortraege_views_testdata.json']
 
@@ -85,6 +89,15 @@ class AllTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
+
+        actual_fd, actual_filename = mkstemp()
+        actual = fdopen(actual_fd, 'w')
+        actual.write(response.content)
+        actual.close()
+        
+        self.assertTrue(cmp('test/vortraege_views_testdata_flyer_1.pdf', actual_filename, 
+                            shallow = 0))
+        remove(actual_filename)
 
     def test_flyer_preview(self):
         """
