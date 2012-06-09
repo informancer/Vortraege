@@ -67,6 +67,15 @@ class AllTestCase(TestCase):
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'] == 'application/pdf')
 
+        actual_fd, actual_filename = mkstemp()
+        actual = fdopen(actual_fd, 'w')
+        actual.write(response.content)
+        actual.close()
+        
+        self.assertTrue(cmp('test/vortraege_views_testdata_poster_1.pdf', actual_filename, 
+                            shallow = 0))
+        remove(actual_filename)
+
     def test_poster_preview(self):
         """
         Tests that the pressetext is an attachment
