@@ -16,21 +16,15 @@ class PlainTextResponseMixin(TemplateResponseMixin):
     def render_to_response(self, context, **response_kwargs):
         response = super(PlainTextResponseMixin, self).render_to_response(context, 
                                                                           **response_kwargs)
+        
         response['Content-Type'] = 'text/plain; charset=utf-8'
         filename = 'pressetext-%s.txt'%context['talk'].start.strftime('%Y%m')
         response['Content-Disposition']  = 'attachment; filename=%s'%filename
         return response
 
+# Create your views here.
 class PlainTextDetailView(PlainTextResponseMixin, BaseDetailView):
     pass
-
-# Create your views here.
-def pressetext(request, talk_id):
-    t = get_object_or_404(Talk, pk=talk_id)
-    response = render_to_response('vortraege/pressetext.txt', {'talk': t})
-    response['Content-Type'] = 'text/plain; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=pressetext-%s.txt'%t.start.strftime('%Y%m')
-    return response
 
 def vevent(request, talk_id):
     t = get_object_or_404(Talk, pk=talk_id)
@@ -98,7 +92,6 @@ def pdf_flyer(request, talk_id):
     cairosvg.svg2pdf(bytestring=rendered.encode('utf-8'), write_to=response)
 
     return response
-
 
 
 
