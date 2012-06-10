@@ -33,11 +33,11 @@ class AllTestCase(TestCase):
         self.assertEqual([talk.pk for talk in response.context['talks_list']], [1])
 
     def test_details(self):
-        response = self.client.get(reverse('vortraege_details', kwargs={'talk_id': 1}))
+        response = self.client.get(reverse('vortraege_details', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200)
 
         # Ensure an inexistant talk throws a 404
-        response = self.client.get(reverse('vortraege_details', kwargs={'talk_id': 2}))
+        response = self.client.get(reverse('vortraege_details', kwargs={'pk': 2}))
         self.assertEqual(response.status_code, 404)
 
     def test_vevent(self):

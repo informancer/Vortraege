@@ -1,7 +1,7 @@
 {% if talks_list %}
     <ul>
       {% for talk in talks_list %}
-          <li><a href="{% url vortraege_details talk_id=talk.id %}">{{ talk.title }}</a></li>
+          <li><a href="{% url vortraege_details pk=talk.id %}">{{ talk.title }}</a></li>
       {% endfor %}
     </ul>
 {% else %}
