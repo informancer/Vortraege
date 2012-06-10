@@ -15,7 +15,7 @@
    height="1052.3622"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.1 r9760"
+   inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="flyer.svg">
   <defs
      id="defs4">
@@ -35,16 +35,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.85349364"
-     inkscape:cx="27.479513"
-     inkscape:cy="448.40753"
+     inkscape:cx="181.90962"
+     inkscape:cy="715.42883"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
-     inkscape:window-width="1678"
-     inkscape:window-height="1023"
-     inkscape:window-x="1"
-     inkscape:window-y="26"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1615"
+     inkscape:window-height="1026"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
      units="mm" />
   <metadata
      id="metadata7">
@@ -508,20 +508,25 @@
        id="text3034"
        sodipodi:linespacing="115%"><tspan
          sodipodi:role="line"
-         id="tspan3036"
          x="24.857151"
          y="161.6479"
-         style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
-         sodipodi:role="line"
-         x="24.857151"
-         y="184.6479"
-         id="tspan3038"
-         style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header1}}</tspan><tspan
-         sodipodi:role="line"
-         x="24.857151"
-         y="207.6479"
          id="tspan3040"
-         style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header2}}</tspan></text>
+         style="font-size:20px;font-weight:normal;line-height:114.99999762%;-inkscape-font-specification:PT Sans">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan></text>
+    <g
+       id="g3467"
+       transform="translate(24.857151,184.6479)">
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans Bold"
+         x="0"
+         y="0"
+         id="text3034-3"
+         sodipodi:linespacing="115%"><tspan
+           x="0"
+           y="0">{{header1}}</tspan><tspan
+           x="0"
+           y="23">{{header2}}</tspan></text>
+    </g>
     <text
        xml:space="preserve"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans"
@@ -555,17 +560,23 @@
          id="tspan3036-2-6"
          x="399.23022"
          y="688.49292"
-         style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
-         sodipodi:role="line"
-         x="399.23022"
-         y="711.49292"
-         id="tspan3038-5-8"
-         style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header1}}</tspan><tspan
-         sodipodi:role="line"
-         x="399.23022"
-         y="734.49292"
-         id="tspan3040-8-7"
-         style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header2}}</tspan></text>
+         style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan></text>
+    <g
+       id="g3467"
+       transform="translate(399.23022,711.49292)">
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans Bold"
+         x="0"
+         y="0"
+         id="text3034-3"
+         sodipodi:linespacing="115%"><tspan
+           x="0"
+           y="0">{{header1}}</tspan><tspan
+           x="0"
+           y="23">{{header2}}</tspan></text>
+    </g>
+
     <text
        xml:space="preserve"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans"
@@ -906,17 +917,23 @@
        id="tspan3036-2"
        x="399.23022"
        y="161.64792"
-       style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
-       sodipodi:role="line"
-       x="399.23022"
-       y="184.64792"
-       id="tspan3038-5"
-       style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header1}}</tspan><tspan
-       sodipodi:role="line"
-       x="399.23022"
-       y="207.64792"
-       id="tspan3040-8"
-       style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header2}}</tspan></text>
+       style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan></text>
+    <g
+       id="g3467"
+       transform="translate(399.23022,184.6479)">
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans Bold"
+         x="0"
+         y="0"
+         id="text3034-3"
+         sodipodi:linespacing="115%"><tspan
+           x="0"
+           y="0">{{header1}}</tspan><tspan
+           x="0"
+           y="23">{{header2}}</tspan></text>
+    </g>
+
   <text
      xml:space="preserve"
      style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans"
@@ -972,17 +989,23 @@
        id="tspan3036-2-6-0"
        x="25.678774"
        y="688.49292"
-       style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan><tspan
-       sodipodi:role="line"
-       x="25.678774"
-       y="711.49292"
-       id="tspan3038-5-8-7"
-       style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header1}}</tspan><tspan
-       sodipodi:role="line"
-       x="25.678774"
-       y="734.49292"
-       id="tspan3040-8-7-3"
-       style="font-size:20px;font-weight:bold;line-height:114.99999762%;-inkscape-font-specification:PT Sans Bold">{{header2}}</tspan></text>
+       style="font-size:20px;line-height:114.99999762%">{{talk.start|date:"d.m.Y, H:i"}} Uhr</tspan></text>
+    <g
+       id="g3467"
+       transform="translate(25.678774,711.49292)">
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans Bold"
+         x="0"
+         y="0"
+         id="text3034-3"
+         sodipodi:linespacing="115%"><tspan
+           x="0"
+           y="0">{{header1}}</tspan><tspan
+           x="0"
+           y="23">{{header2}}</tspan></text>
+    </g>
+
   <text
      xml:space="preserve"
      style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:114.99999762%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:PT Sans;-inkscape-font-specification:PT Sans"
