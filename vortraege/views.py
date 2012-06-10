@@ -15,6 +15,7 @@ import cairosvg
 class AttachmentResponseMixin(TemplateResponseMixin):
     content_type = None
     filename_prefix = None
+    filename_suffix = None
 
     def render_to_response(self, context, **response_kwargs):
         if self.content_type is None:
@@ -31,8 +32,12 @@ class AttachmentResponseMixin(TemplateResponseMixin):
         if self.filename_prefix is None:
             raise ImproperlyConfigured(
                 "AttachmentResponseMixin requires a definition of 'filename_prefix'")
-        return '%s-%s.txt'%(self.filename_prefix,
-                            context['object'].start.strftime('%Y%m'))
+        if self.filename_suffix is None:
+            raise ImproperlyConfigured(
+                "AttachmentResponseMixin requires a definition of 'filename_suffix'")
+        return '%s-%s.%s'%(self.filename_prefix,
+                           context['object'].start.strftime('%Y%m'),
+                           self.filename_suffix)
 
 # Create your views here.
 class AttachmentDetailView(AttachmentResponseMixin, BaseDetailView):
