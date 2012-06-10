@@ -5,19 +5,12 @@ from textwrap import wrap
 
 from django.template import Context, loader
 from django.http import HttpResponse
+from django.views.generic import TemplateView
 
 from icalendar import Event
 import cairosvg
 
 # Create your views here.
-def index(request): 
-    talks_list = Talk.objects.all().order_by('start')
-    return render_to_response('vortraege/index.html', 
-                              {
-            'talks_list': talks_list,
-            })
-    return HttpResponse(t.render(c))
-
 def details(request, talk_id):
     t = get_object_or_404(Talk, pk=talk_id)
     return render_to_response('vortraege/details.html', {'talk': t})

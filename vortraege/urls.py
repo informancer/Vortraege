@@ -1,7 +1,14 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import ListView
+from vortraege.models import Talk
 
 urlpatterns = patterns('vortraege.views',
-    url(r'^$', 'index', name='vortraege_index'),
+    url(r'^$', 
+        ListView.as_view(
+            queryset = Talk.objects.all().order_by('start'),
+            context_object_name='talks_list',
+            template_name='vortraege/index.html'),
+        name='vortraege_index'),
     url(r'^(?P<talk_id>\d+)/$', 'details', name='vortraege_details') ,
     url(r'^(?P<talk_id>\d+)/ical/$', 'vevent', name='vortraege_ical') ,
     url(r'^(?P<talk_id>\d+)/pressetext/$', 'pressetext', name='vortraege_pressetext') ,
