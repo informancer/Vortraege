@@ -62,16 +62,6 @@ def render_svg_poster(talk):
     c = Context({'talk': talk})
     return template.render(c)    
 
-def svg_poster(request, talk_id):
-    t = get_object_or_404(Talk, pk=talk_id)
-
-    rendered = render_svg_poster(t)
-
-    response = HttpResponse(rendered)
-    response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=aushang-%s.svg'%t.start.strftime('%Y%m')
-    return response
-
 def pdf_poster(request, talk_id):
     t = get_object_or_404(Talk, pk=talk_id)
 

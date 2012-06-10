@@ -80,7 +80,7 @@ class AllTestCase(TestCase):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get(reverse('vortraege_svg_poster', kwargs={'talk_id': 1}))
+        response=self.client.get(reverse('vortraege_svg_poster', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         self.assertTrue(response['Content-Type'].startswith('image/svg+xml'))
