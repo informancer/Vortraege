@@ -35,7 +35,7 @@ class AttachmentResponseMixin(TemplateResponseMixin):
                             context['object'].start.strftime('%Y%m'))
 
 # Create your views here.
-class PlainTextDetailView(AttachmentResponseMixin, BaseDetailView):
+class AttachmentDetailView(AttachmentResponseMixin, BaseDetailView):
     pass
 
 def vevent(request, talk_id):
