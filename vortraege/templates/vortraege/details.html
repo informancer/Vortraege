@@ -8,7 +8,7 @@
 
 <p>Orgapate: {{ talk.organiser }}</p>
 
-<p><a href="{% url vortraege_pressetext talk_id=talk.id %}">Pressetext {{talk.start}}</a></p>
+<p><a href="{% url vortraege_pressetext pk=talk.id %}">Pressetext {{talk.start}}</a></p>
 <p><a href="{% url vortraege_pdf_poster talk_id=talk.id %}">Aushang {{talk.start}}</a></p>
 <p><a href="{% url vortraege_pdf_flyer talk_id=talk.id %}">Flyer {{talk.start}}</a></p>
 <p><a href="{% url vortraege_ical talk_id=talk.id %}">Kalendereintrag {{talk.start}}</a></p>

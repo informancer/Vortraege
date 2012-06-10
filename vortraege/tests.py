@@ -52,7 +52,7 @@ class AllTestCase(TestCase):
         """
         Tests that the pressetext is an attachment
         """
-        response=self.client.get(reverse('vortraege_pressetext', kwargs={'talk_id': 1}))
+        response=self.client.get(reverse('vortraege_pressetext', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response['Content-Disposition'].startswith('attachment'))
         for line in response.content.split('\n'):

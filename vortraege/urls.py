@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import DetailView, ListView
+from vortraege.views import PlainTextDetailView
 from vortraege.models import Talk
 
 urlpatterns = patterns('vortraege.views',
@@ -15,7 +16,11 @@ urlpatterns = patterns('vortraege.views',
             template_name = 'vortraege/details.html'), 
         name='vortraege_details'),
     url(r'^(?P<talk_id>\d+)/ical/$', 'vevent', name='vortraege_ical') ,
-    url(r'^(?P<talk_id>\d+)/pressetext/$', 'pressetext', name='vortraege_pressetext') ,
+    url(r'^(?P<pk>\d+)/pressetext/$', 
+        PlainTextDetailView.as_view(
+            model = Talk,
+            template_name = 'vortraege/pressetext.txt'),
+        name='vortraege_pressetext'),
     url(r'^(?P<talk_id>\d+)/aushang/$', 'pdf_poster', name='vortraege_pdf_poster') ,
     url(r'^(?P<talk_id>\d+)/aushang/preview/$', 'svg_poster', name='vortraege_svg_poster'), 
     url(r'^(?P<talk_id>\d+)/flyer/$', 'pdf_flyer', name='vortraege_pdf_flyer'),

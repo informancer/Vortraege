@@ -5,10 +5,24 @@ from textwrap import wrap
 
 from django.template import Context, loader
 from django.http import HttpResponse
+from django.views.generic.base import TemplateResponseMixin
+from django.views.generic.detail import BaseDetailView
 from django.views.generic import TemplateView
 
 from icalendar import Event
 import cairosvg
+
+class PlainTextResponseMixin(TemplateResponseMixin):
+    def render_to_response(self, context, **response_kwargs):
+        response = super(PlainTextResponseMixin, self).render_to_response(context, 
+                                                                          **response_kwargs)
+        response['Content-Type'] = 'text/plain; charset=utf-8'
+        filename = 'pressetext-%s.txt'%context['talk'].start.strftime('%Y%m')
+        response['Content-Disposition']  = 'attachment; filename=%s'%filename
+        return response
+
+class PlainTextDetailView(PlainTextResponseMixin, BaseDetailView):
+    pass
 
 # Create your views here.
 def pressetext(request, talk_id):
