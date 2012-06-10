@@ -69,16 +69,8 @@ def pdf_poster(request, talk_id):
     return response
 
 def render_svg_flyer(talk):
-    header = wrap('%s: %s'%(talk.speaker, talk.title), 25)
-    header1 = header[0]
-    if len(header) > 1:
-        header2 = header[1]
-    else:
-        header2 = u''
     template = loader.get_template('vortraege/flyer.svg')
-    c = Context({'talk': talk,
-                 'header1': header1,
-                 'header2': header2})
+    c = Context({'talk': talk})
     return template.render(c)    
     
 

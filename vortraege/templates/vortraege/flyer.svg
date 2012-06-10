@@ -521,11 +521,7 @@
          x="0"
          y="0"
          id="text3034-3"
-         sodipodi:linespacing="115%"><tspan
-           x="0"
-           y="0">{{header1}}</tspan><tspan
-           x="0"
-           y="23">{{header2}}</tspan></text>
+         sodipodi:linespacing="115%">{{ talk|author_and_title:"25,20,115" }}</text>
     </g>
     <text
        xml:space="preserve"
@@ -570,11 +566,7 @@
          x="0"
          y="0"
          id="text3034-3"
-         sodipodi:linespacing="115%"><tspan
-           x="0"
-           y="0">{{header1}}</tspan><tspan
-           x="0"
-           y="23">{{header2}}</tspan></text>
+         sodipodi:linespacing="115%">{{ talk|author_and_title:"25,20,115" }}</text>
     </g>
 
     <text
@@ -927,11 +919,7 @@
          x="0"
          y="0"
          id="text3034-3"
-         sodipodi:linespacing="115%"><tspan
-           x="0"
-           y="0">{{header1}}</tspan><tspan
-           x="0"
-           y="23">{{header2}}</tspan></text>
+         sodipodi:linespacing="115%">{{ talk|author_and_title:"25,20,115" }}</text>
     </g>
 
   <text
@@ -999,11 +987,7 @@
          x="0"
          y="0"
          id="text3034-3"
-         sodipodi:linespacing="115%"><tspan
-           x="0"
-           y="0">{{header1}}</tspan><tspan
-           x="0"
-           y="23">{{header2}}</tspan></text>
+         sodipodi:linespacing="115%">{{ talk|author_and_title:"25,20,115" }}</text>
     </g>
 
   <text

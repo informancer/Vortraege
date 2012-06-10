@@ -10,6 +10,8 @@ from django.utils.safestring import mark_safe
 from django.utils import timezone
 from icalendar import Event
 
+from textwrap import wrap
+
 register = template.Library()
 
 class SvgGroup(qrcode.image.svg.SvgFragmentImage):
@@ -68,3 +70,30 @@ def render_qrcode(value, arg='0,0'):
     svg_tree = img.get_tree()
     
     return mark_safe(xml.etree.ElementTree.tostring(svg_tree))
+
+@register.filter('author_and_title')
+def autor_and_title(value, arg):
+    """
+    value = talk
+    arg   = line length, font_size in px, linespacing in percents
+
+    Formats the autor and title for a talk:
+    if the title is longer than line length, the title will begin on the same line as the author name and be wrapped.
+    in the other case, one line will be used for the author, the other for the title.
+    """
+    args = arg.split(',')
+    line_length = int(args[0])
+    font_size = float(args[1])
+    linespacing = float(args[2])
+
+    linespace = font_size * linespacing / 100
+
+    if len(value.title) > line_length:
+        wrapped = wrap('%s: %s'%(talk.speaker, talk.title), line_length)
+        speaker_line = wrapped[0]
+        title_line = wrapped[1]
+    else:
+        speaker_line = value.speaker
+        title_line = value.title
+    return mark_safe('<tspan x="0" y="0">%s</tspan><tspan x="0" y="%f">%s</tspan>'%(speaker_line, linespace, title_line))
+
