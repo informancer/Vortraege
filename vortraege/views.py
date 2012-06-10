@@ -12,18 +12,30 @@ from django.views.generic import TemplateView
 from icalendar import Event
 import cairosvg
 
-class PlainTextResponseMixin(TemplateResponseMixin):
+class AttachmentResponseMixin(TemplateResponseMixin):
+    content_type = None
+    filename_prefix = None
+
     def render_to_response(self, context, **response_kwargs):
-        response = super(PlainTextResponseMixin, self).render_to_response(context, 
+        if self.content_type is None:
+            raise ImproperlyConfigured(
+                "AttachmentResponseMixin requires a definition of 'content_type'")
+        response = super(AttachmentResponseMixin, self).render_to_response(context, 
                                                                           **response_kwargs)
         
-        response['Content-Type'] = 'text/plain; charset=utf-8'
-        filename = 'pressetext-%s.txt'%context['talk'].start.strftime('%Y%m')
-        response['Content-Disposition']  = 'attachment; filename=%s'%filename
+        response['Content-Type'] = self.content_type
+        response['Content-Disposition']  = 'attachment; filename=%s'%self.get_filename(context)
         return response
 
+    def get_filename(self, context):
+        if self.filename_prefix is None:
+            raise ImproperlyConfigured(
+                "AttachmentResponseMixin requires a definition of 'filename_prefix'")
+        return '%s-%s.txt'%(self.filename_prefix,
+                            context['object'].start.strftime('%Y%m'))
+
 # Create your views here.
-class PlainTextDetailView(PlainTextResponseMixin, BaseDetailView):
+class PlainTextDetailView(AttachmentResponseMixin, BaseDetailView):
     pass
 
 def vevent(request, talk_id):
