@@ -77,17 +77,6 @@ def render_svg_flyer(talk):
     c = Context({'talk': talk})
     return template.render(c)    
     
-
-def svg_flyer(request, talk_id):
-    talk = get_object_or_404(Talk, pk=talk_id)
-
-    rendered = render_svg_flyer(talk)
-
-    response = HttpResponse(rendered)
-    response['Content-Type'] = 'image/svg+xml; charset=utf-8'
-    response['Content-Disposition']  = 'attachment; filename=flyer-%s.svg'%talk.start.strftime('%Y%m')
-    return response
-
 def pdf_flyer(request, talk_id):
     talk = get_object_or_404(Talk, pk=talk_id)
 
