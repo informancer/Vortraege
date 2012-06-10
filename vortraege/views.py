@@ -11,10 +11,6 @@ from icalendar import Event
 import cairosvg
 
 # Create your views here.
-def details(request, talk_id):
-    t = get_object_or_404(Talk, pk=talk_id)
-    return render_to_response('vortraege/details.html', {'talk': t})
-
 def pressetext(request, talk_id):
     t = get_object_or_404(Talk, pk=talk_id)
     response = render_to_response('vortraege/pressetext.txt', {'talk': t})

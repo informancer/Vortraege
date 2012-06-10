@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 from vortraege.models import Talk
 
 urlpatterns = patterns('vortraege.views',
@@ -9,7 +9,11 @@ urlpatterns = patterns('vortraege.views',
             context_object_name='talks_list',
             template_name='vortraege/index.html'),
         name='vortraege_index'),
-    url(r'^(?P<talk_id>\d+)/$', 'details', name='vortraege_details') ,
+    url(r'^(?P<pk>\d+)/$', 
+        DetailView.as_view(
+            model = Talk,
+            template_name = 'vortraege/details.html'), 
+        name='vortraege_details'),
     url(r'^(?P<talk_id>\d+)/ical/$', 'vevent', name='vortraege_ical') ,
     url(r'^(?P<talk_id>\d+)/pressetext/$', 'pressetext', name='vortraege_pressetext') ,
     url(r'^(?P<talk_id>\d+)/aushang/$', 'pdf_poster', name='vortraege_pdf_poster') ,
