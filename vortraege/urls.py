@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import DetailView, ListView
-from vortraege.views import AttachmentDetailView, PdfAttachmentDetailView, convert_to_pdf
+from vortraege.views import AttachmentDetailView, convert_to_pdf
 from vortraege.models import Talk
 
 urlpatterns = patterns('vortraege.views',
