@@ -1,15 +1,12 @@
-from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response, get_object_or_404
 from vortraege.models import Talk
-from textwrap import wrap
 
-from django.template import Context, loader
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from icalendar import Event
+
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import BaseDetailView
-from django.views.generic import TemplateView
 
-from icalendar import Event
 import cairosvg
 
 class AttachmentResponseMixin(TemplateResponseMixin):
@@ -38,6 +35,8 @@ class AttachmentResponseMixin(TemplateResponseMixin):
         return '%s-%s.%s'%(self.filename_prefix,
                            context['object'].start.strftime('%Y%m'),
                            self.filename_suffix)
+
+
 
 class PdfAttachmentResponseMixin(AttachmentResponseMixin):
     @staticmethod
