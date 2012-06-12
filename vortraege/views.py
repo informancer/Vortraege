@@ -17,6 +17,7 @@ class AttachmentResponseMixin(TemplateResponseMixin):
     content_type = None
     filename_prefix = None
     filename_suffix = None
+    post_render_callbacks = []
 
     def render_to_response(self, context, **response_kwargs):
         if self.content_type is None:
@@ -24,7 +25,8 @@ class AttachmentResponseMixin(TemplateResponseMixin):
                 "AttachmentResponseMixin requires a definition of 'content_type'")
         response = super(AttachmentResponseMixin, self).render_to_response(context, 
                                                                           **response_kwargs)
-        
+        for callback in self.post_render_callbacks:
+            response.add_post_render_callback(callback)
         response['Content-Type'] = self.content_type
         response['Content-Disposition']  = 'attachment; filename=%s'%self.get_filename(context)
         return response

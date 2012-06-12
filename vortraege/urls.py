@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import DetailView, ListView
-from vortraege.views import AttachmentDetailView, PdfAttachmentDetailView
+from vortraege.views import AttachmentDetailView, PdfAttachmentDetailView, convert_to_pdf
 from vortraege.models import Talk
 
 urlpatterns = patterns('vortraege.views',
@@ -25,12 +25,13 @@ urlpatterns = patterns('vortraege.views',
             filename_suffix = 'txt'),
         name='vortraege_pressetext'),
     url(r'^(?P<pk>\d+)/aushang/$', 
-        PdfAttachmentDetailView.as_view(
+        AttachmentDetailView.as_view(
             model = Talk,
             template_name = 'vortraege/aushang.svg',
             content_type = 'application/pdf',
             filename_prefix = 'aushang',
-            filename_suffix = 'pdf'), 
+            filename_suffix = 'pdf',
+            post_render_callbacks = [convert_to_pdf]), 
         name='vortraege_pdf_poster') ,
     url(r'^(?P<pk>\d+)/aushang/preview/$', 
         AttachmentDetailView.as_view(
@@ -41,12 +42,13 @@ urlpatterns = patterns('vortraege.views',
             filename_suffix = 'svg'), 
         name='vortraege_svg_poster'), 
     url(r'^(?P<pk>\d+)/flyer/$', 
-        PdfAttachmentDetailView.as_view(
+        AttachmentDetailView.as_view(
             model = Talk,
             template_name = 'vortraege/flyer.svg',
             content_type = 'application/pdf',
             filename_prefix = 'flyer',
-            filename_suffix = 'pdf'), 
+            filename_suffix = 'pdf',
+            post_render_callbacks = [convert_to_pdf]), 
         name='vortraege_pdf_flyer'),
     url(r'^(?P<pk>\d+)/flyer/preview/$', 
         AttachmentDetailView.as_view(
