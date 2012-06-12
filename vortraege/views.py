@@ -39,6 +39,18 @@ class AttachmentResponseMixin(TemplateResponseMixin):
                            context['object'].start.strftime('%Y%m'),
                            self.filename_suffix)
 
+class PdfAttachmentResponseMixin(TemplateResponseMixin):
+    content_type = None
+    filename_prefix = None
+    filename_suffix = None
+
+    def render_to_response(self, context, **response_kwargs):
+        response = super(AttachmentResponseMixin, self).render_to_response(context, 
+                                                                         **response_kwargs)
+        
+        return response
+
+
 # Create your views here.
 class AttachmentDetailView(AttachmentResponseMixin, BaseDetailView):
     pass
@@ -57,7 +69,6 @@ def convert_to_pdf(svg, response):
     cairosvg.svg2pdf(bytestring=svg.encode('utf-8'), write_to=response)
     
 def render_svg_poster(talk):
-
     template = loader.get_template('vortraege/aushang.svg')
     c = Context({'talk': talk})
     return template.render(c)    
