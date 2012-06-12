@@ -28,12 +28,13 @@ class Command(BaseCommand):
 
         # Then create reference svgs for all Vortraege
         for talk in Talk.objects.all():
-            expected = open('%s_poster_%s.svg'%(prefix, talk.pk), 'w')
-            response=client.get(reverse('vortraege_svg_poster', kwargs={'pk': 1}))
-            expected.write(response.content)
-            
-            expected = open('%s_flyer_%s.svg'%(prefix, talk.pk), 'w')
-            response=client.get(reverse('vortraege_svg_flyer', kwargs={'pk': 1}))
-            expected.write(response.content)
+            for template, content_type in ((template, content_type) 
+                                           for template in ['poster', 'flyer'] 
+                                           for content_type in ['svg', 'pdf']):
+                expected = open('%s_%s_%s.%s'%(prefix, template, talk.pk, content_type), 'w')
+                response=client.get(reverse('vortraege_%s_%s'%(content_type, template), 
+                                            kwargs={'pk': 1}))
+                expected.write(response.content)
+
             
 
