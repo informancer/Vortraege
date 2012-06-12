@@ -68,38 +68,3 @@ def vevent(request, talk_id):
     response['Content-Disposition'] = 'attachment; filename=talk-%s.ics'%t.start.strftime('%Y%m')
     return response
 
-def convert_to_pdf(svg, response):
-    cairosvg.svg2pdf(bytestring=svg.encode('utf-8'), write_to=response)
-    
-def render_svg_poster(talk):
-    template = loader.get_template('vortraege/aushang.svg')
-    c = Context({'talk': talk})
-    return template.render(c)    
-
-def pdf_poster(request, talk_id):
-    t = get_object_or_404(Talk, pk=talk_id)
-
-    rendered = render_svg_poster(t)
-
-    response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition']  = 'attachment; filename=aushang-%s.pdf'%t.start.strftime('%Y%m')
-    convert_to_pdf(rendered, response)
-    return response
-
-def render_svg_flyer(talk):
-    template = loader.get_template('vortraege/flyer.svg')
-    c = Context({'talk': talk})
-    return template.render(c)    
-    
-def pdf_flyer(request, talk_id):
-    talk = get_object_or_404(Talk, pk=talk_id)
-
-    rendered = render_svg_flyer(talk)
-
-    response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition']  = 'attachment; filename=flyer-%s.pdf'%talk.start.strftime('%Y%m')
-    convert_to_pdf(rendered, response)
-    return response
-
-
-
