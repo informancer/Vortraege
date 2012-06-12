@@ -9,6 +9,10 @@ from django.views.generic.detail import BaseDetailView
 
 import cairosvg
 
+def convert_to_pdf(response):
+    response.content = cairosvg.svg2pdf(bytestring=response.content)
+    return response
+
 class AttachmentResponseMixin(TemplateResponseMixin):
     content_type = None
     filename_prefix = None
@@ -36,18 +40,11 @@ class AttachmentResponseMixin(TemplateResponseMixin):
                            context['object'].start.strftime('%Y%m'),
                            self.filename_suffix)
 
-
-
 class PdfAttachmentResponseMixin(AttachmentResponseMixin):
-    @staticmethod
-    def convert_to_pdf(response):
-        response.content = cairosvg.svg2pdf(bytestring=response.content)
-        return response
-
     def render_to_response(self, context, **response_kwargs):
         response = super(PdfAttachmentResponseMixin, self).render_to_response(context, 
                                                                            **response_kwargs)
-        response.add_post_render_callback(self.convert_to_pdf)
+        response.add_post_render_callback(convert_to_pdf)
         return response
 
 # Create your views here.
