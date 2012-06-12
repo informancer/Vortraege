@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import DetailView, ListView
-from vortraege.views import AttachmentDetailView
+from vortraege.views import AttachmentDetailView, PdfAttachmentDetailView
 from vortraege.models import Talk
 
 urlpatterns = patterns('vortraege.views',
@@ -33,7 +33,14 @@ urlpatterns = patterns('vortraege.views',
             filename_prefix = 'aushang',
             filename_suffix = 'svg'), 
         name='vortraege_svg_poster'), 
-    url(r'^(?P<talk_id>\d+)/flyer/$', 'pdf_flyer', name='vortraege_pdf_flyer'),
+    url(r'^(?P<pk>\d+)/flyer/$', 
+        PdfAttachmentDetailView.as_view(
+            model = Talk,
+            template_name = 'vortraege/flyer.svg',
+            content_type = 'application/pdf',
+            filename_prefix = 'flyer',
+            filename_suffix = 'pdf'), 
+        name='vortraege_pdf_flyer'),
     url(r'^(?P<pk>\d+)/flyer/preview/$', 
         AttachmentDetailView.as_view(
             model = Talk,
