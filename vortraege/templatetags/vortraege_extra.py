@@ -72,7 +72,7 @@ def render_qrcode(value, arg='0,0'):
     return mark_safe(xml.etree.ElementTree.tostring(svg_tree))
 
 @register.filter('author_and_title')
-def autor_and_title(value, arg):
+def author_and_title(value, arg):
     """
     value = talk
     arg   = line length, font_size in px, linespacing in percents
