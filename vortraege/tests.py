@@ -99,3 +99,27 @@ class AllTestCase(TestCase):
             expected = etree.fromstring(expect_file.read())
             actual = etree.fromstring(response.content)        
             self.assertTrue(xml_compare(expected, actual, reporter=sys.stderr.write))
+
+from vortraege.templatetags.vortraege_extra import autor_and_title
+
+class TalkStub(object):
+    def __init__(self, speaker, title):
+        self.speaker = speaker
+        self.title = title
+
+class TemplateTagsTestCases(TestCase):
+
+    def test_short_title(self):
+        talk = TalkStub('john doe', 'a short talk')
+        actual = autor_and_title(talk, '20,10,150')
+        expected = '<tspan x="0" y="0">john doe</tspan><tspan x="0" y="15.000000">a short talk</tspan>'
+        self.assertEqual(actual, expected, "Wrong formatting for a short title")
+
+    def test_long_title(self):
+        pass
+
+        talk = TalkStub('john doe', 'a short talk with a name way longer than it should be')
+        actual = autor_and_title(talk, '20,10,150')
+        expected = '<tspan x="0" y="0">john doe: a short talk with a</tspan><tspan x="0" y="15.000000">name way longer than needed</tspan>'
+        self.assertEqual(actual, expected, "Wrong formatting for a short title")
+
