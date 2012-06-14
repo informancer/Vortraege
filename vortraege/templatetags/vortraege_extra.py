@@ -89,7 +89,7 @@ def autor_and_title(value, arg):
     linespace = font_size * linespacing / 100
 
     if len(value.title) > line_length:
-        wrapped = wrap('%s: %s'%(talk.speaker, talk.title), line_length)
+        wrapped = wrap('%s: %s'%(value.speaker, value.title), line_length)
         speaker_line = wrapped[0]
         title_line = wrapped[1]
     else:

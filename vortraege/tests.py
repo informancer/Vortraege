@@ -118,8 +118,8 @@ class TemplateTagsTestCases(TestCase):
     def test_long_title(self):
         pass
 
-        talk = TalkStub('john doe', 'a short talk with a name way longer than it should be')
-        actual = autor_and_title(talk, '20,10,150')
+        talk = TalkStub('john doe', 
+                        'a short talk with a name way longer than needed')
+        actual = autor_and_title(talk, '30,10,150')
         expected = '<tspan x="0" y="0">john doe: a short talk with a</tspan><tspan x="0" y="15.000000">name way longer than needed</tspan>'
         self.assertEqual(actual, expected, "Wrong formatting for a short title")
-
