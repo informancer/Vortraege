@@ -9,7 +9,6 @@
  * Do not escape characters in the pressetext (html escape)
  * Add RSS Feed
  * Add Podcast for past talks
- * Search a way to cleanly have a word-wrapped header in flyers.
  * Add Geographic Position to Model, templates and ICAL 
  * Add Location to Model, templates and ICAL 
  * Add timestamp for last modification to model, ICAL, templates 
