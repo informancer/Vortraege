@@ -91,7 +91,9 @@ def author_and_title(value, arg):
     if len(value.title) > line_length:
         wrapped = wrap('%s: %s'%(value.speaker, value.title), line_length)
         speaker_line = wrapped[0]
-        title_line = wrapped[1]
+        # In case the wrapped version is longer than two lines, put the end of the title at the end of the second line.
+        # It's then simpler to edit the SVG to get a pleasing document.
+        title_line = ' '.join(wrapped[1:])
     else:
         speaker_line = value.speaker
         title_line = value.title
