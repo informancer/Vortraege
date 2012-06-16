@@ -37,7 +37,7 @@ class AllTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Ensure an inexistant talk throws a 404
-        response = self.client.get(reverse('vortraege_details', kwargs={'pk': 2}))
+        response = self.client.get(reverse('vortraege_details', kwargs={'pk': 99}))
         self.assertEqual(response.status_code, 404)
 
     def test_vevent(self):
@@ -45,7 +45,7 @@ class AllTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Ensure an inexistant talk throws a 404
-        response = self.client.get(reverse('vortraege_ical', kwargs={'talk_id': 2}))
+        response = self.client.get(reverse('vortraege_ical', kwargs={'talk_id': 99}))
         self.assertEqual(response.status_code, 404)
         
     def test_pressetext_attachment(self):
