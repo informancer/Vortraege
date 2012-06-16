@@ -2,11 +2,11 @@ from django.db import models
 
 # Supporting functions
 def presstext_upload_to(instance, filename):
-    return 'pressetext-%s'%instance.start.strftime('%Y%m%d')
+    return 'pressetext-%s.txt'%instance.start.strftime('%Y%m%d')
 def poster_upload_to(instance, filename):
-    return 'aushang-%s'%instance.start.strftime('%Y%m%d')
+    return 'aushang-%s.pdf'%instance.start.strftime('%Y%m%d')
 def flyer_upload_to(instance, filename):
-    return 'flyer-%s'%instance.start.strftime('%Y%m%d')
+    return 'flyer-%s.pdf'%instance.start.strftime('%Y%m%d')
 
 # Create your models here.
 class Talk(models.Model):
