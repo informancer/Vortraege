@@ -30,7 +30,7 @@ class AllTestCase(TestCase):
         response = self.client.get(reverse('vortraege_index'))
         self.assertEqual(response.status_code, 200)
         self.assertTrue('talks_list' in response.context)
-        self.assertEqual([talk.pk for talk in response.context['talks_list']], [1])
+        self.assertEqual([talk.pk for talk in response.context['talks_list']], [1,2])
 
     def test_details(self):
         response = self.client.get(reverse('vortraege_details', kwargs={'pk': 1}))
@@ -76,6 +76,24 @@ class AllTestCase(TestCase):
                             shallow = 0))
         remove(actual_filename)
 
+    def test_attached_poster(self):
+        """
+        Tests that the pressetext is an attachment
+        """
+        response=self.client.get(reverse('vortraege_pdf_poster', kwargs={'pk': 2}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response['Content-Disposition'].startswith('attachment'))
+        self.assertTrue(response['Content-Type'] == 'application/pdf')
+
+        actual_fd, actual_filename = mkstemp()
+        actual = fdopen(actual_fd, 'w')
+        actual.write(response.content)
+        actual.close()
+        
+        self.assertTrue(cmp('test/vortraege_views_testdata_poster_2.pdf', actual_filename, 
+                            shallow = 0))
+        remove(actual_filename)
+
     def test_poster_preview(self):
         """
         Tests that the pressetext is an attachment
@@ -105,6 +123,24 @@ class AllTestCase(TestCase):
         actual.close()
         
         self.assertTrue(cmp('test/vortraege_views_testdata_flyer_1.pdf', actual_filename, 
+                            shallow = 0))
+        remove(actual_filename)
+
+    def test_attached_flyer(self):
+        """
+        Tests that the pressetext is an attachment
+        """
+        response=self.client.get(reverse('vortraege_pdf_flyer', kwargs={'pk': 2}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response['Content-Disposition'].startswith('attachment'))
+        self.assertTrue(response['Content-Type'] == 'application/pdf')
+
+        actual_fd, actual_filename = mkstemp()
+        actual = fdopen(actual_fd, 'w')
+        actual.write(response.content)
+        actual.close()
+        
+        self.assertTrue(cmp('test/vortraege_views_testdata_flyer_2.pdf', actual_filename, 
                             shallow = 0))
         remove(actual_filename)
 

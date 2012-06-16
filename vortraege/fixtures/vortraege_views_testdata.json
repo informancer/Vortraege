@@ -1,18 +1,34 @@
 [
     {
-        "pk": 1, 
-        "model": "vortraege.talk", 
+        "pk": 1,
+        "model": "vortraege.talk",
         "fields": {
-            "audio": "", 
-            "slides": "", 
-            "start": "2012-05-06T14:03:00Z", 
-            "presstext": "", 
-            "description": "This is a very nice talk, presented by a guy who really knows what he is talking about. \r\nThe previous line should be wrapped in the text.\r\n", 
-            "speaker": "John Doe", 
-            "flyer": "", 
-            "title": "Cooles Vortrag", 
-            "poster": "", 
-            "organiser": "Paul Smith"
+            "description": "This is a very nice talk, presented by a guy who really knows what he is talking about. \r\nThe previous line should be wrapped in the text.\r\n",
+            "title": "Cooles Vortrag",
+            "presstext": "",
+            "organiser": "Paul Smith",
+            "slides": "",
+            "start": "2012-05-06T14:03:00Z",
+            "flyer": "",
+            "speaker": "John Doe",
+            "poster": "",
+            "audio": ""
+        }
+    },
+    {
+        "pk": 2,
+        "model": "vortraege.talk",
+        "fields": {
+            "description": "Zum hundertsten Geburtstag Alan Turings ein \u00dcberblick \u00fcber \r\nsein Leben als Mensch und sein Schaffen als Pionier in der Informations- \r\nund Computertechnologie bis seinem vorzeitigen Tod. Heute wird Turing gerne \r\nals Prototyp des genialen Computernerds und als englisches Nationalheiligtum gesehen. \r\nBegriffe wie \"Turing-Test\" und \"turing-vollst\u00e4ndig\" sind vielen Menschen ein Begriff. \r\nEin \u00dcberblick \u00fcber Meilensteine und ein wahrlich unw\u00fcrdiges Ende.",
+            "title": "Zum Turing-Jahr 2012 - Alan Turing w\u00e4re 100 Jahre geworden.",
+            "presstext": "pressetext-20120717.txt",
+            "organiser": "Michael Erath",
+            "slides": "",
+            "start": "2012-07-17T17:30:00Z",
+            "flyer": "flyer-20120717.pdf",
+            "speaker": "Christian Lehmann",
+            "poster": "aushang-20120717.pdf",
+            "audio": ""
         }
     }
 ]
