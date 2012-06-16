@@ -7,6 +7,7 @@ from icalendar import Event
 from django.core.exceptions import ImproperlyConfigured
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import BaseDetailView
+from django.http import HttpResponse
 
 import cairosvg
 
@@ -15,19 +16,28 @@ def convert_to_pdf(response):
     return response
 
 class AttachmentResponseMixin(TemplateResponseMixin):
+    fieldname = None
     content_type = None
     filename_prefix = None
     filename_suffix = None
     post_render_callbacks = []
 
     def render_to_response(self, context, **response_kwargs):
+        if self.fieldname is None:
+            raise ImproperlyConfigured(
+                "AttachmentResponseMixin requires a definition of 'fieldname'")
         if self.content_type is None:
             raise ImproperlyConfigured(
                 "AttachmentResponseMixin requires a definition of 'content_type'")
-        response = super(AttachmentResponseMixin, self).render_to_response(context, 
-                                                                          **response_kwargs)
-        for callback in self.post_render_callbacks:
-            response.add_post_render_callback(callback)
+        attachment = getattr(context['object'], self.fieldname)
+        if attachment:
+            response = HttpResponse(attachment)
+        else:
+            response = super(AttachmentResponseMixin, self).render_to_response(context, 
+                                                                               **response_kwargs)
+            for callback in self.post_render_callbacks:
+                response.add_post_render_callback(callback)
+                
         response['Content-Type'] = self.content_type
         response['Content-Disposition']  = 'attachment; filename=%s'%self.get_filename(context)
         return response
