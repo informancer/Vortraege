@@ -9,6 +9,16 @@ def flyer_upload_to(instance, filename):
     return 'flyer-%s.pdf'%instance.start.strftime('%Y%m%d')
 
 # Create your models here.
+class Event(models.Model):
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+    title = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    url =  models.URLField(blank=True)
+
+    def __unicode__(self):
+        return self.title
+
 class Talk(models.Model):
     start = models.DateTimeField() 
     title = models.CharField(max_length=200)
