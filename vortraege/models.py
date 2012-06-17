@@ -30,6 +30,7 @@ class Talk(models.Model):
     flyer = models.FileField(upload_to=flyer_upload_to, blank=True)
     slides = models.URLField(blank=True)
     audio = models.URLField(blank=True)
+    event = models.ManyToManyField(Event)
 
     def __unicode__(self):
         return self.title
