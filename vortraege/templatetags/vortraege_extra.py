@@ -99,3 +99,20 @@ def author_and_title(value, arg):
         title_line = value.title
     return mark_safe('<tspan x="0" y="0">%s</tspan><tspan x="0" y="%f">%s</tspan>'%(speaker_line, linespace, title_line))
 
+@register.filter('further_events')
+def further_events(value, args):
+    """
+    value = talk
+    arg   = line length, font_size in px, linespacing in percents
+
+    Formats the further events
+    """
+    return mark_safe("""<tspan
+         sodipodi:role="line"
+         id="tspan3724"
+         x="53.527996"
+         y="732.39398">27. - 30.12.2011     28. Chaos Communication Congress Berlin</tspan><tspan
+         sodipodi:role="line"
+         id="tspan3726"
+         x="53.527996"
+         y="750.39398">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan>""")
