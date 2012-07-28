@@ -305,20 +305,18 @@
            sodipodi:role="line" /></text>
     </g>
     {% if talk.event %}
-    <g>
+    <g transform="translate(53.527996,714.39398)">
       <text
 	 xml:space="preserve"
 	 style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:120.00000477%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:PT Sans;-inkscape-font-specification:PT Sans"
-	 x="53.527996"
-	 y="714.39398"
 	 id="text3299-6-8-8-7-1"
 	 sodipodi:linespacing="120%">
 	<tspan
            sodipodi:role="line"
            id="tspan3722"
            style="font-weight:bold;-inkscape-font-specification:PT Sans Bold"
-           x="53.527996"
-           y="714.39398">Weitere Termine</tspan>
+           x="0"
+           y="0">Weitere Termine</tspan>
 	{{talk|further_events:"0"}}
       </text>
     </g>
