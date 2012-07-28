@@ -108,11 +108,12 @@ def further_events(value, args):
     Formats the further events
     """
     return mark_safe("""<tspan
-         sodipodi:role="line"
-         id="tspan3724"
-         x="53.527996"
-         y="732.39398">27. - 30.12.2011     28. Chaos Communication Congress Berlin</tspan><tspan
-         sodipodi:role="line"
-         id="tspan3726"
-         x="53.527996"
-         y="750.39398">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan>""")
+           sodipodi:role="line"
+           id="tspan3724"
+           x="53.527996"
+           y="732.39398">27. - 30.12.2011     28. Chaos Communication Congress Berlin</tspan>
+	<tspan
+           sodipodi:role="line"
+           id="tspan3726"
+           x="53.527996"
+           y="750.39398">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan>""")
