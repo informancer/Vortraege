@@ -107,5 +107,13 @@ def further_events(value, args):
 
     Formats the further events
     """
-    return mark_safe("""<tspan x="0" y="18.0">27. - 30.12.2011     28. Chaos Communication Congress Berlin</tspan>
-	<tspan x="0" y="36.0">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan>""")
+    events = ["27. - 30.12.2011     28. Chaos Communication Congress Berlin", 
+              "12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V."]
+    font_size = 15
+    linespacing = 120
+    result = []
+    linespace =     font_size*linespacing/100
+    for i, event in enumerate(events, 1):
+        result.append("""<tspan x="0" y="%.1f">%s</tspan>"""%(linespace*i,
+                                                            event))
+    return mark_safe("\n\t".join(result))
