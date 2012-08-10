@@ -200,7 +200,6 @@ class FormatEventDateTestCases(TestCase):
         e = EventStub(datetime(2012, 01, 01))
         expected = "01.01.2012"
         actual = format_event_date(e)
-        print actual
         self.assertEquals(actual, expected, "Wrong Format for start date only")
 
     def test_all_different(self):
@@ -208,7 +207,6 @@ class FormatEventDateTestCases(TestCase):
                       datetime(2013, 01, 01))
         expected = "01.01.2012 - 01.01.2013"
         actual = format_event_date(e)
-        print actual
         self.assertEquals(actual, expected, "Wrong Format for different year")
 
     def test_same_year(self):
@@ -216,7 +214,6 @@ class FormatEventDateTestCases(TestCase):
                       datetime(2012, 02, 01))
         expected = "01.01. - 01.02.2012"
         actual = format_event_date(e)
-        print actual
         self.assertEquals(actual, expected, "Wrong Format for same year")
 
     def test_same_month(self):
@@ -224,15 +221,13 @@ class FormatEventDateTestCases(TestCase):
                       datetime(2012, 01, 02))
         expected = "01. - 02.01.2012"
         actual = format_event_date(e)
-        print actual
         self.assertEquals(actual, expected, "Wrong Format for same month")
 
     def test_same_date(self):
         e = EventStub(datetime(2012, 01, 01),
                       datetime(2012, 01, 01))
-        expected = "02.01.2012"
+        expected = "01.01.2012"
         actual = format_event_date(e)
-        print actual
         self.assertEquals(actual, expected, "Wrong Format for same date")
 
 

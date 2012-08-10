@@ -105,11 +105,21 @@ def format_event_date(value):
 
     Formats the date range of an event
     """
-    start = value.start.strftime('%d.%m.%Y')
+
+    start_format = '%d.%m.%Y'
     end = ""
     if value.end:
         end = ' - %s'%value.end.strftime('%d.%m.%Y')
-
+        # Now remove the redundant parts of the start date
+        # Warning: UGLY
+        if value.start.year == value.end.year:
+            start_format = "%d.%m."
+            if value.start.month == value.end.month:
+                start_format = "%d."
+                if value.start.day == value.end.day:
+                    start_format = '%d.%m.%Y'
+                    end = ""
+    start = value.start.strftime(start_format)
     return '%s%s'%(start, end)
 
 @register.filter('further_events')
