@@ -1,4 +1,26 @@
 [
+{
+        "pk": 1,
+        "model": "vortraege.event",
+        "fields": {
+            "url": "",
+            "start": "2011-12-27T12:00:00Z",
+            "end": "2011-12-30T12:00:00Z",
+            "location": "Berlin",
+            "title": "28. Chaos Communication Congress"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "vortraege.event",
+        "fields": {
+            "url": "",
+            "start": "2012-01-12T12:00:00Z",
+            "end": "2012-01-12T22:00:00Z",
+            "location": "Stuttgart",
+            "title": "Stuttgarter Filmwinter mit Wand5 e.V."
+        }
+    },
     {
         "pk": 1,
         "model": "vortraege.talk",
@@ -12,7 +34,11 @@
             "flyer": "",
             "speaker": "John Doe",
             "poster": "",
-            "audio": ""
+            "audio": "",
+	    "event": [
+	        1,
+		2
+	    ]
         }
     },
     {
@@ -28,7 +54,11 @@
             "flyer": "flyer-20120717.pdf",
             "speaker": "Christian Lehmann",
             "poster": "aushang-20120717.pdf",
-            "audio": ""
-        }
+            "audio": "",
+	    "event": [
+	        1,
+		2
+	    ]
+	}
     }
 ]

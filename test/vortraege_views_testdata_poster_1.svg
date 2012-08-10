@@ -315,8 +315,10 @@
            style="font-weight:bold;-inkscape-font-specification:PT Sans Bold"
            x="0"
            y="0">Weitere Termine</tspan>
-	<tspan x="0" y="18.0">27. - 30.12.2011     28. Chaos Communication Congress Berlin</tspan>
-	<tspan x="0" y="36.0">12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V.</tspan>
+	<tspan x="0" y="18.0">27. - 30.12.2011</tspan>
+	<tspan x="140" y="18.0">28. Chaos Communication Congress, Berlin</tspan>
+	<tspan x="0" y="36.0">12.01.2012</tspan>
+	<tspan x="140" y="36.0">Stuttgarter Filmwinter mit Wand5 e.V., Stuttgart</tspan>
       </text>
     </g>
     

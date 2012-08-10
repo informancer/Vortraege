@@ -130,13 +130,13 @@ def further_events(value, args):
 
     Formats the further events
     """
-    events = ["27. - 30.12.2011     28. Chaos Communication Congress Berlin", 
-              "12.1.2012              Stuttgarter Filmwinter mit Wand5 e.V."]
     font_size = 15
     linespacing = 120
     result = []
     linespace =     font_size*linespacing/100
-    for i, event in enumerate(events, 1):
-        result.append("""<tspan x="0" y="%.1f">%s</tspan>"""%(linespace*i,
-                                                            event))
+    for i, event in enumerate(value.event.all()[:2], 1):
+        result.append("""<tspan x="0" y="%.1f">%s</tspan>"""%(linespace*i, format_event_date(event)))
+        result.append("""<tspan x="140" y="%.1f">%s, %s</tspan>"""%(linespace*i, 
+                                                                   event.title,
+                                                                   event.location))
     return mark_safe("\n\t".join(result))
