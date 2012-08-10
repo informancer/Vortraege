@@ -99,6 +99,19 @@ def author_and_title(value, arg):
         title_line = value.title
     return mark_safe('<tspan x="0" y="0">%s</tspan><tspan x="0" y="%f">%s</tspan>'%(speaker_line, linespace, title_line))
 
+def format_event_date(value):
+    """
+    value = talk
+
+    Formats the date range of an event
+    """
+    start = value.start.strftime('%d.%m.%Y')
+    end = ""
+    if value.end:
+        end = ' - %s'%value.end.strftime('%d.%m.%Y')
+
+    return '%s%s'%(start, end)
+
 @register.filter('further_events')
 def further_events(value, args):
     """

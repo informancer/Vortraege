@@ -185,5 +185,55 @@ class TemplateTagsTestCases(TestCase):
                         'a short talk with a name way longer than would absolutely be necessary')
         actual = author_and_title(talk, '30,10,150')
         expected = '<tspan x="0" y="0">john doe: a short talk with a</tspan><tspan x="0" y="15.000000">name way longer than would absolutely be necessary</tspan>'
-        self.assertEqual(actual, expected, "Wrong formatting for a very title")
+        self.assertEqual(actual, expected, "Wrong formatting for a very long title")
 
+
+from vortraege.templatetags.vortraege_extra import format_event_date
+
+class EventStub:
+    def __init__(self, start, end=None):
+        self.start = start
+        self.end = end
+
+class FormatEventDateTestCases(TestCase):
+    def test_start_date_only(self):
+        e = EventStub(datetime(2012, 01, 01))
+        expected = "01.01.2012"
+        actual = format_event_date(e)
+        print actual
+        self.assertEquals(actual, expected, "Wrong Format for start date only")
+
+    def test_all_different(self):
+        e = EventStub(datetime(2012, 01, 01),
+                      datetime(2013, 01, 01))
+        expected = "01.01.2012 - 01.01.2013"
+        actual = format_event_date(e)
+        print actual
+        self.assertEquals(actual, expected, "Wrong Format for different year")
+
+    def test_same_year(self):
+        e = EventStub(datetime(2012, 01, 01),
+                      datetime(2012, 02, 01))
+        expected = "01.01. - 01.02.2012"
+        actual = format_event_date(e)
+        print actual
+        self.assertEquals(actual, expected, "Wrong Format for same year")
+
+    def test_same_month(self):
+        e = EventStub(datetime(2012, 01, 01),
+                      datetime(2012, 01, 02))
+        expected = "01. - 02.01.2012"
+        actual = format_event_date(e)
+        print actual
+        self.assertEquals(actual, expected, "Wrong Format for same month")
+
+    def test_same_date(self):
+        e = EventStub(datetime(2012, 01, 01),
+                      datetime(2012, 01, 01))
+        expected = "02.01.2012"
+        actual = format_event_date(e)
+        print actual
+        self.assertEquals(actual, expected, "Wrong Format for same date")
+
+
+        
